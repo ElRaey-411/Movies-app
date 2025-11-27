@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/theme_manager.dart';
 import 'core/resources/routes_manager.dart';
 
+
 void main(){
 
   runApp(MoviesApp());
