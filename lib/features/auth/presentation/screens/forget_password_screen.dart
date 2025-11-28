@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
-import 'package:movies_app/core/resources/value_manager.dart';
 import 'package:movies_app/core/validators/app_validators.dart';
 import 'package:movies_app/core/widgets/custom_app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
@@ -39,7 +38,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           child: Column(
             children: [
               Image.asset(ImagesAssets.forgetPassword),
-              SizedBox(height: AppSize.s24.h),
+              SizedBox(height: 24.h),
               CustomTextFormField(
                 controller: _emailController,
                 validator: AppValidators.emailValidator,
@@ -47,7 +46,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 preIcon: ImageIcon(AssetImage(IconAssets.email)),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: AppSize.s24.h),
+              SizedBox(height: 24.h),
               CustomElevatedButton(text: "Verify Email", onPress: () {}),
             ],
           ),

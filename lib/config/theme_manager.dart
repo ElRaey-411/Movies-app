@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
-import 'package:movies_app/core/resources/value_manager.dart';
 
 class ThemeManager {
   static final ThemeData light = ThemeData();
@@ -24,7 +23,7 @@ class ThemeManager {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.r),
         ),
-        minimumSize: Size(double.infinity, AppSize.s55),
+        minimumSize: Size(double.infinity, 55),
         textStyle: GoogleFonts.roboto(
           fontSize: 20.sp,
           fontWeight: FontWeight.w400,

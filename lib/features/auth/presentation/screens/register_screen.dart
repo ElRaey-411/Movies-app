@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
-import 'package:movies_app/core/resources/value_manager.dart';
 import 'package:movies_app/core/validators/app_validators.dart';
 import 'package:movies_app/core/widgets/custom_app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
@@ -54,19 +53,19 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     Text(
                       "Avatar",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomTextFormField(
                       validator: AppValidators.nameValidator,
                       controller: provider.nameController,
                       hintText: "Name",
                       preIcon: ImageIcon(AssetImage(IconAssets.name)),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomTextFormField(
                       validator: AppValidators.emailValidator,
                       controller: provider.emailController,
@@ -74,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                       keyboardType: TextInputType.emailAddress,
                       preIcon: ImageIcon(AssetImage(IconAssets.email)),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomTextFormField(
                       validator: AppValidators.passwordValidator,
                       controller: provider.passwordController,
@@ -82,7 +81,7 @@ class RegisterScreen extends StatelessWidget {
                       hintText: "Password",
                       keyboardType: TextInputType.visiblePassword,
                       preIcon: ImageIcon(AssetImage(IconAssets.password)),
-                      suffIcon: IconButton(
+                      sufIcon: IconButton(
                         onPressed: provider.changePasswordVisibilityState,
                         icon: Icon(
                           provider.visiblePassword
@@ -91,7 +90,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomTextFormField(
                       validator: provider.confirmPasswordValidator,
                       controller: provider.confirmPasswordController,
@@ -99,7 +98,7 @@ class RegisterScreen extends StatelessWidget {
                       hintText: "Confirm Password",
                       keyboardType: TextInputType.visiblePassword,
                       preIcon: ImageIcon(AssetImage(IconAssets.password)),
-                      suffIcon: IconButton(
+                      sufIcon: IconButton(
                         onPressed:
                             provider.changeConfirmPasswordVisibilityState,
                         icon: Icon(
@@ -109,7 +108,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomTextFormField(
                       validator: AppValidators.phoneValidator,
                       controller: provider.phoneController,
@@ -117,14 +116,14 @@ class RegisterScreen extends StatelessWidget {
                       keyboardType: TextInputType.phone,
                       preIcon: ImageIcon(AssetImage(IconAssets.phone)),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+                    SizedBox(height: 24.h),
                     CustomElevatedButton(
                       text: "Create Account",
                       onPress: () {
                         provider.onCreateAccountClicked();
                       },
                     ),
-                    SizedBox(height: AppSize.s18.h),
+                    SizedBox(height: 18.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -144,9 +143,9 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: AppSize.s18.h),
+                    SizedBox(height: 18.h),
                     SizedBox(
-                      width: AppSize.s120.w,
+                      width: 120.w,
                       child: CustomAnimatedToggle(),
                     ),
                   ],

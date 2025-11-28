@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
-import 'package:movies_app/core/resources/value_manager.dart';
 import 'package:movies_app/core/validators/app_validators.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_button.dart';
@@ -27,7 +26,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(ImagesAssets.logo),
-                  SizedBox(height: AppSize.s65.h),
+                  SizedBox(height: 65.h),
                   CustomTextFormField(
                     controller: provider.emailController,
                     validator: AppValidators.emailValidator,
@@ -35,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     preIcon: ImageIcon(AssetImage(IconAssets.email)),
                   ),
-                  SizedBox(height: AppSize.s24.h),
+                  SizedBox(height: 24.h),
                   CustomTextFormField(
                     controller: provider.passwordController,
                     validator: AppValidators.passwordValidator,
@@ -43,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     hintText: "Password",
                     keyboardType: TextInputType.visiblePassword,
                     preIcon:ImageIcon(AssetImage(IconAssets.password)),
-                    suffIcon: IconButton(
+                    sufIcon: IconButton(
                       onPressed: provider.changePasswordVisibilityState,
                       icon: Icon(
                         provider.visiblePassword
@@ -52,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: AppSize.s18.h),
+                  SizedBox(height: 18.h),
                   Align(
                     alignment: Alignment.centerRight,
                     child: CustomTextButton(
@@ -67,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 35.h),
                   CustomElevatedButton(text: "Login", onPress: () {}),
-                  SizedBox(height: AppSize.s22.h),
+                  SizedBox(height: 22.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -90,8 +89,8 @@ class LoginScreen extends StatelessWidget {
                         child: Divider(
                           color: ColorsManager.yellow,
                           thickness: 1,
-                          endIndent: AppSize.s12.w,
-                          indent: AppSize.s90.w,
+                          endIndent: 12.w,
+                          indent: 90.w,
                         ),
                       ),
                       Text(
@@ -103,22 +102,22 @@ class LoginScreen extends StatelessWidget {
                         child: Divider(
                           color: ColorsManager.yellow,
                           thickness: 1,
-                          endIndent: AppSize.s90.w,
-                          indent: AppSize.s12.w,
+                          endIndent: 90.w,
+                          indent: 12.w,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: AppSize.s28.h),
+                  SizedBox(height: 28.h),
                   CustomElevatedButton(
                     text: "Login With Google",
                     onPress: () {},
                     icon: ImageIcon(AssetImage(IconAssets.google)),
                   ),
-                  SizedBox(height: AppSize.s24.h),
+                  SizedBox(height: 24.h),
 
                   SizedBox(
-                    width: AppSize.s120.w,
+                    width: 120.w,
                     child: CustomAnimatedToggle()),
                 ],
               ),
