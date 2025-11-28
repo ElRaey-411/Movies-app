@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../features/auth/presentation/provider/auth_provider.dart';
 import '../../features/auth/presentation/screens/forget_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
+import '../../features/main_layout/presentation/main_layout.dart';
+import '../../features/main_layout/presentation/main_layout_provider.dart';
 
 abstract class RoutesManager {
   static const String login = "login";

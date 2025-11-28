@@ -23,9 +23,9 @@ abstract class IconAssets {
   static const String egypt = "$base/eg.png";
   static const String usa = "$base/usa.png";
   static const String google = "$base/google_icon.png";
-  static const String homeIcon='$base/home_icon.svg';
-  static const String searchIcon='$base/search_icon.svg';
-  static const String exploreIcon='$base/explore_icon.svg';
-  static const String profileIcon='$base/profile_icon.svg';
+  static const String home='$base/home_icon.svg';
+  static const String search='$base/search_icon.svg';
+  static const String explore='$base/explore_icon.svg';
+  static const String profile='$base/profile_icon.svg';
 
 }

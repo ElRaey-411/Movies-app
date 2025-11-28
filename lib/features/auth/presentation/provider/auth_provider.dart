@@ -9,8 +9,8 @@ class AuthProvider extends ChangeNotifier {
 
   int selectedAvatar = 2;
   int currentValue = 0;
-  bool visiblePassword = false;
-  bool visibleConfirmPassword = false;
+  bool visiblePassword = true;
+  bool visibleConfirmPassword = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void pickAvatarImage(int avatarIndex) {
