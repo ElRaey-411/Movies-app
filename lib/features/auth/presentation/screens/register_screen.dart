@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
@@ -31,30 +32,28 @@ class RegisterScreen extends StatelessWidget {
                 padding: REdgeInsets.symmetric(horizontal: 12.0, vertical: 16),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 200.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: Avatar.avatars.length,
-                        itemBuilder: (context, index) {
-                          bool isSelected =
-                              provider.selectedAvatar ==
-                              Avatar.avatars[index].id;
-                          return GestureDetector(
-                            onTap: () {
-                              provider.pickAvatarImage(
-                                Avatar.avatars[index].id,
-                              );
-                            },
-                            child: Image.asset(
-                              Avatar.avatars[index].bath,
-                              fit: isSelected ? BoxFit.cover : null,
-                            ),
-                          );
-                        },
+                    CarouselSlider(
+                      items: Avatar.avatars.map((avatar) {
+                        bool isSelected = provider.selectedAvatar == avatar.id;
+                        return GestureDetector(
+                          onTap: () {
+                            provider.pickAvatarImage(avatar.id);
+                          },
+                          child: Image.asset(
+                            avatar.bath,
+                            fit: isSelected ? BoxFit.contain : null,
+                          ),
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: 200.h,
+                        initialPage: provider.selectedAvatar,
+
+                        autoPlayCurve: Curves.easeInOut,
+                        viewportFraction: .35,
                       ),
                     ),
-                    SizedBox(height: AppSize.s24.h),
+
                     Text(
                       "Avatar",
                       style: Theme.of(context).textTheme.headlineSmall,

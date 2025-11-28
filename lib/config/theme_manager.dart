@@ -43,7 +43,7 @@ class ThemeManager {
       ),
       filled: true,
       fillColor: ColorsManager.grey,
-
+      
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15.r),
         borderSide: BorderSide(color: ColorsManager.grey, width: 1.w),

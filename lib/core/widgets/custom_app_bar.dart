@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(50.h),
       child: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Text(titleText),
         leading: IconButton(
           onPressed: () {

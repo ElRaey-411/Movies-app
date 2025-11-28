@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.isObscure = false,
     this.validator,
-    this.keyboardType = TextInputType.text
+    this.keyboardType = TextInputType.text,
   });
   final String hintText;
   final Widget? preIcon;
@@ -24,12 +24,17 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: GoogleFonts.roboto(fontSize: 16.sp,fontWeight: FontWeight.w500,color: ColorsManager.white),
+      style: GoogleFonts.roboto(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.white,
+      ),
       validator: validator,
       controller: controller,
       obscureText: isObscure,
       cursorColor: ColorsManager.white,
-      keyboardType:keyboardType ,
+
+      keyboardType: keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         hintText: hintText,

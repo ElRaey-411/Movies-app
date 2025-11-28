@@ -18,3 +18,4 @@ class Avatar {
     Avatar(id: 9, bath: ImagesAssets.avatar9),
   ];
 }
+  

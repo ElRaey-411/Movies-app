@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     isObscure: provider.visiblePassword,
                     hintText: "Password",
                     keyboardType: TextInputType.visiblePassword,
-                    preIcon:ImageIcon(AssetImage(IconAssets.password)),
+                    preIcon: ImageIcon(AssetImage(IconAssets.password)),
                     suffIcon: IconButton(
                       onPressed: provider.changePasswordVisibilityState,
                       icon: Icon(
@@ -119,7 +119,8 @@ class LoginScreen extends StatelessWidget {
 
                   SizedBox(
                     width: AppSize.s120.w,
-                    child: CustomAnimatedToggle()),
+                    child: CustomAnimatedToggle(),
+                  ),
                 ],
               ),
             );
