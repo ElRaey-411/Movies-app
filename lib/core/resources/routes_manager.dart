@@ -9,7 +9,10 @@ abstract class RoutesManager {
   static const String register = "register";
 
   static Map<String, WidgetBuilder> routes = {
-    login: (context) => LoginScreen(),
+    login: (context) => ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: LoginScreen(),
+    ),
     register: (context) => ChangeNotifierProvider(
       create: (context) => AuthProvider(),
       child: RegisterScreen(),

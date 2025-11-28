@@ -71,8 +71,7 @@ class RegisterScreen extends StatelessWidget {
                     CustomTextFormField(
                       validator: AppValidators.nameValidator,
                       controller: provider.nameController,
-
-                      hintText: "Name",
+                      hintText: "Name",                     
                       preIcon: ImageIcon(AssetImage(IconAssets.name)),
                     ),
                     SizedBox(height: AppSize.s24.h),
@@ -80,6 +79,7 @@ class RegisterScreen extends StatelessWidget {
                       validator: AppValidators.emailValidator,
                       controller: provider.emailController,
                       hintText: "Email",
+                      keyboardType: TextInputType.emailAddress,
                       preIcon: ImageIcon(AssetImage(IconAssets.email)),
                     ),
                     SizedBox(height: AppSize.s24.h),
@@ -88,6 +88,7 @@ class RegisterScreen extends StatelessWidget {
                       controller: provider.passwordController,
                       isObscure: provider.visiblePassword,
                       hintText: "Password",
+                      keyboardType: TextInputType.visiblePassword,
                       preIcon: ImageIcon(AssetImage(IconAssets.password)),
                       suffIcon: IconButton(
                         onPressed: provider.changePasswordVisibilityState,
@@ -104,6 +105,7 @@ class RegisterScreen extends StatelessWidget {
                       controller: provider.confirmPasswordController,
                       isObscure: provider.visibleConfirmPassword,
                       hintText: "Confirm Password",
+                      keyboardType: TextInputType.visiblePassword,
                       preIcon: ImageIcon(AssetImage(IconAssets.password)),
                       suffIcon: IconButton(
                         onPressed:
@@ -120,6 +122,7 @@ class RegisterScreen extends StatelessWidget {
                       validator: AppValidators.phoneValidator,
                       controller: provider.phoneController,
                       hintText: "Phone Number",
+                      keyboardType: TextInputType.phone,
                       preIcon: ImageIcon(AssetImage(IconAssets.phone)),
                     ),
                     SizedBox(height: AppSize.s24.h),
