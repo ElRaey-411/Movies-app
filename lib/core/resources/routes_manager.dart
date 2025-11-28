@@ -3,8 +3,8 @@ import 'package:movies_app/features/auth/login/login_screen.dart';
 import 'package:movies_app/features/auth/register/register_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../features/main_layout/main_layout.dart';
-import '../../features/main_layout/main_layout_provider.dart';
+import '../../features/main_layout/presentation/main_layout.dart';
+import '../../features/main_layout/presentation/main_layout_provider.dart';
 
 abstract class RoutesManager {
   static const String login = "login";
