@@ -4,10 +4,12 @@ import 'package:movies_app/core/errors/errors/app_exceptions.dart';
 import 'package:movies_app/core/errors/errors/failure.dart';
 import 'package:movies_app/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:movies_app/features/auth/data/models/login_request.dart';
 import 'package:movies_app/features/auth/data/models/register_request.dart';
 import 'package:movies_app/features/auth/domain/entities/user_entity.dart';
 import 'package:movies_app/features/auth/domain/repositories/auth_repository.dart';
-@Singleton(as:AuthRepository )
+
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRemoteDataSource authRemoteDataSource;
   AuthLocalDataSource authLocalDataSource;
@@ -23,6 +25,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(response.user.toUserEntity());
     } on AppExceptions catch (exception) {
       return Left(Failure(message: exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> login(LoginRequest request) async {
+    try {
+      final response = await authRemoteDataSource.login(request);
+      return Right(response.data);
+    } on AppExceptions catch (exception) {
+      return left(Failure(message: exception.message));
     }
   }
 }

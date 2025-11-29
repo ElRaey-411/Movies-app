@@ -23,6 +23,7 @@ import '../../features/auth/data/data_sources/remote/auth_remote_data_source.dar
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
+import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
 import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
 import '../../features/auth/presentation/cubit/auth_cubit.dart' as _i117;
 
@@ -45,11 +46,17 @@ extension GetItInjectableX on _i174.GetIt {
         authLocalDataSource: gh<_i485.AuthLocalDataSource>(),
       ),
     );
+    gh.singleton<_i1038.LoginUseCase>(
+      () => _i1038.LoginUseCase(authRepository: gh<_i787.AuthRepository>()),
+    );
     gh.singleton<_i1010.RegisterUseCase>(
       () => _i1010.RegisterUseCase(authRepository: gh<_i787.AuthRepository>()),
     );
     gh.singleton<_i117.AuthCubit>(
-      () => _i117.AuthCubit(registerUseCase: gh<_i1010.RegisterUseCase>()),
+      () => _i117.AuthCubit(
+        registerUseCase: gh<_i1010.RegisterUseCase>(),
+        loginUseCase: gh<_i1038.LoginUseCase>(),
+      ),
     );
     return this;
   }

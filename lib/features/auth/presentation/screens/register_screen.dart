@@ -89,8 +89,8 @@ class RegisterScreen extends StatelessWidget {
                         onPressed: provider.changePasswordVisibilityState,
                         icon: Icon(
                           provider.visiblePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off_rounded,
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility
                         ),
                       ),
                     ),
@@ -107,8 +107,8 @@ class RegisterScreen extends StatelessWidget {
                             provider.changeConfirmPasswordVisibilityState,
                         icon: Icon(
                           provider.visibleConfirmPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off_rounded,
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility
                         ),
                       ),
                     ),
@@ -161,7 +161,7 @@ class RegisterScreen extends StatelessWidget {
                                 confirmPassword:
                                     provider.confirmPasswordController.text,
                                 phone: provider.phoneController.text,
-                                avaterId: 1,
+                                avaterId: provider.selectedAvatar,
                               ),
                             );
                           
