@@ -11,6 +11,7 @@ abstract class ImagesAssets {
   static const String avatar9 = "$base/avatar9.png";
   static const String logo = "$base/logo.png";
   static const String forgetPassword = "$base/forget_password_image.png";
+  static const String availableWatchNowMovie='assets/images/available_watch_now_movie.png';
 
 }
 

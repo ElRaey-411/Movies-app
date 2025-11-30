@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/features/main_layout/widgets/bottom_nav_bar.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/widgets/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 import 'main_layout_provider.dart';
 

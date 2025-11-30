@@ -27,19 +27,19 @@ class CustomBottomNav extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           navItem(
-            icon: IconAssets.home,
+            icon: IconAssets.homeIcon,
             index: 0,
           ),
           navItem(
-            icon: IconAssets.search,
+            icon: IconAssets.searchIcon,
             index: 1,
           ),
           navItem(
-            icon: IconAssets.explore,
+            icon: IconAssets.exploreIcon,
             index: 2,
           ),
           navItem(
-            icon: IconAssets.profile,
+            icon: IconAssets.profileIcon,
             index: 3,
           ),
         ],
