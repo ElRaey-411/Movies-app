@@ -11,6 +11,7 @@ class MoviesRepoImpl implements MoviesRepo {
   @override
   Future<Either<String, List<MovieSummaryEntity>>> getMovies({
     int? limit,
+    String? genre,
   }) async {
     try {
       final result = await dataSource.getMovies(

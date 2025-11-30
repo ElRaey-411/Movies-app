@@ -8,11 +8,12 @@ class MoviesApiDataSource implements MoviesDataSource {
   final Dio dio;
   MoviesApiDataSource({required this.dio});
   @override
-  Future<Either<String, List<Movie>>> getMovies({int? limit}) async {
+  Future<Either<String, List<Movie>>> getMovies({int? limit, String? genre}) async {
     try {
-      final response = await dio.get(ConstManager.moviesApiBase+ConstManager.moviesListEndPoint,
+      final response = await dio.get(MoviesApiConstant.baseUrl+MoviesApiConstant.moviesListEndPoint,
         queryParameters: {
           'limit': limit,
+          'genre': genre,
         },);
       if (response.statusCode == 200) {
         final data = response.data['data'];
