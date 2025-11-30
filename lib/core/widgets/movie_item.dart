@@ -6,7 +6,7 @@ class MovieItem extends StatelessWidget {
   const MovieItem({super.key, required this.pic, required this.rate});
 
  final String pic;
- final String rate;
+ final double rate;
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class MovieItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.asset(pic,fit: BoxFit.cover)
+          child: Image.network(pic,fit: BoxFit.cover)
         ),
         Positioned(
-          top: 16,
-          left: 16,
+          top: 10,
+          left: 8,
           child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: 8, vertical: 4),
@@ -29,16 +29,16 @@ class MovieItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  rate,
+                  "$rate",
                   style: TextStyle(
-                      color: ColorsManager.white, fontSize: 14.sp
+                      color: ColorsManager.white, fontSize: 16.sp
                   ),
                 ),
                 SizedBox(width: 4),
                 Icon(
                   Icons.star,
                   color: ColorsManager.yellow,
-                  size: 14.sp,
+                  size: 16.sp,
                 )
               ],
             ),

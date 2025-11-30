@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../../../core/resources/colors_manager.dart';
+import '../../../../../../../../core/widgets/movie_item.dart';
 
-import '../../../../../core/resources/colors_manager.dart';
-import '../../../../../core/widgets/movie_item.dart';
 
 class CategoryListView extends StatelessWidget {
   const CategoryListView({super.key, required this.categoryName});
@@ -46,7 +46,7 @@ class CategoryListView extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(width: 16.w),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) =>
-                  MovieItem(pic: 'assets/images/cap_movie.png', rate: "5.8"),
+                  MovieItem(pic: 'assets/images/cap_movie.png', rate: 5.7),
               itemCount: 15,
             ),
           ),
