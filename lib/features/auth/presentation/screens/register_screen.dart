@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
+import 'package:movies_app/core/resources/ui_utils.dart';
 import 'package:movies_app/core/validators/app_validators.dart';
 import 'package:movies_app/core/widgets/custom_app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
+import 'package:movies_app/features/auth/data/models/register_request.dart';
+import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/auth/presentation/provider/auth_provider.dart';
 import 'package:movies_app/features/auth/presentation/widgets/custom_animated_toogle.dart';
 import 'package:provider/provider.dart';
@@ -86,8 +90,8 @@ class RegisterScreen extends StatelessWidget {
                         onPressed: provider.changePasswordVisibilityState,
                         icon: Icon(
                           provider.visiblePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off_rounded,
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility
                         ),
                       ),
                     ),
@@ -104,8 +108,8 @@ class RegisterScreen extends StatelessWidget {
                             provider.changeConfirmPasswordVisibilityState,
                         icon: Icon(
                           provider.visibleConfirmPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off_rounded,
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility
                         ),
                       ),
                     ),
@@ -118,11 +122,52 @@ class RegisterScreen extends StatelessWidget {
                       preIcon: ImageIcon(AssetImage(IconAssets.phone)),
                     ),
                     SizedBox(height: 24.h),
-                    CustomElevatedButton(
-                      text: "Create Account",
-                      onPress: () {
-                        provider.onCreateAccountClicked();
+                    BlocListener<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is RegisterLoading) {
+                          UiUtils.showLoadingDialog(context);
+                        } else if (state is RegisterError) {
+                          UiUtils.hideLoadingDialog(context);
+                          UiUtils.showToastificationBar(
+                            context,
+                            state.message,
+                            ColorsManager.white,
+                            ColorsManager.red,
+                            Icons.error,
+                          );
+                        } else if (state is RegisterSuccess) {
+                          UiUtils.hideLoadingDialog(context);
+                          UiUtils.showToastificationBar(
+                            context,
+                            "Successfull Registeration ",
+                            ColorsManager.white,
+                            ColorsManager.green,
+                            Icons.check_circle,
+                          );
+                          Navigator.pushReplacementNamed(
+                            context,
+                            RoutesManager.login,
+                          );
+                        }
                       },
+                      child: CustomElevatedButton(
+                        text: "Create Account",
+                        onPress: () {
+                         if(provider.formKey.currentState?.validate() == false) return;
+                            BlocProvider.of<AuthCubit>(context).register(
+                              RegisterRequest(
+                                name: provider.nameController.text,
+                                email: provider.emailController.text,
+                                password: provider.passwordController.text,
+                                confirmPassword:
+                                    provider.confirmPasswordController.text,
+                                phone: provider.phoneController.text,
+                                avaterId: provider.selectedAvatar,
+                              ),
+                            );
+                          
+                        },
+                      ),
                     ),
                     SizedBox(height: 18.h),
                     Row(
@@ -145,10 +190,7 @@ class RegisterScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 18.h),
-                    SizedBox(
-                      width: 120.w,
-                      child: CustomAnimatedToggle(),
-                    ),
+                    SizedBox(width: 120.w, child: CustomAnimatedToggle()),
                   ],
                 ),
               ),
