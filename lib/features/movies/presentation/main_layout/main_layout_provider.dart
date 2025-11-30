@@ -6,15 +6,19 @@ import 'package:movies_app/features/movies/presentation/main_layout/tabs/browse_
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/home_tab.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/home_tab_cubit.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/profile_tab.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/search_tab.dart';
 
 class MainLayoutProvider extends ChangeNotifier {
   late HomeTabCubit homeTabCubit = serviceLocator.get<HomeTabCubit>()
     ..fetchMovies(limit: 10);
+  late SearchCubit searchCubit = serviceLocator.get<SearchCubit>();
   int selectedTab = 0;
   late List<Widget> tabs = [
     BlocProvider.value(value: homeTabCubit, child: HomeTab()),
-    SearchTab(),
+    BlocProvider.value(
+      value: searchCubit,
+      child: SearchTab()),
     BrowseTab(),
     ProfileTab(),
   ];

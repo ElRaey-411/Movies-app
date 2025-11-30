@@ -8,22 +8,34 @@ import 'movies_data_source.dart';
 @LazySingleton(as: MoviesDataSource)
 class MoviesApiDataSource implements MoviesDataSource {
   final Dio dio = Dio(BaseOptions(baseUrl: MoviesApiConstant.baseUrl));
-  
+
   @override
-  Future<Either<String, List<Movie>>> getMovies({int? limit, String? genres}) async {
-     print("API GENRE SENT => $genres"); 
+  Future<Either<String, List<Movie>>> getMovies({
+    int? limit,
+    String? genres,
+    String? queryTerm,
+  }) async {
     try {
-      final response = await dio.get(MoviesApiConstant.moviesListEndPoint,
+      final response = await dio.get(
+        MoviesApiConstant.moviesListEndPoint,
         queryParameters: {
           'limit': limit,
           'genre': genres,
-        },);
-        print("RESPONSE COUNT => ${response.data['data']['movies'].length}");
+          'query_term': queryTerm,
+        },
+      );
       if (response.statusCode == 200) {
         final data = response.data['data'];
-        final movies = (data['movies'] as List)
+        final moviesList = data['movies'];
+
+        if (moviesList == null) {
+          return Right([]);
+        }
+
+        final movies = (moviesList as List)
             .map((json) => Movie.fromJson(json))
             .toList();
+
         return Right(movies);
       } else {
         return Left('Server Error: ${response.statusCode}');
@@ -31,8 +43,5 @@ class MoviesApiDataSource implements MoviesDataSource {
     } catch (e) {
       return Left(e.toString());
     }
-
   }
-
-
 }

@@ -14,9 +14,14 @@ class MoviesRepoImpl implements MoviesRepo {
   Future<Either<String, List<MovieSummaryEntity>>> getMovies({
     int? limit,
     String? genres,
+    String? queryTerm,
   }) async {
     try {
-      final result = await dataSource.getMovies(limit: limit, genres: genres);
+      final result = await dataSource.getMovies(
+        limit: limit,
+        genres: genres,
+        queryTerm: queryTerm,
+      );
       return result.fold(
         (failure) => Left(failure),
         (movies) =>

@@ -35,10 +35,13 @@ import '../../features/movies/domain/repos/movies_repo.dart' as _i786;
 import '../../features/movies/domain/use_cases/browse_use_case.dart' as _i883;
 import '../../features/movies/domain/use_cases/carousel_movies_use_case.dart'
     as _i1050;
+import '../../features/movies/domain/use_cases/search_use_case.dart' as _i605;
 import '../../features/movies/presentation/main_layout/tabs/browse_tab/cubit/browse_cubit.dart'
     as _i138;
 import '../../features/movies/presentation/main_layout/tabs/home_tab/presentation/home_tab_cubit.dart'
     as _i825;
+import '../../features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart'
+    as _i267;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -63,6 +66,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1050.CarouselMoviesUseCase>(
       () => _i1050.CarouselMoviesUseCase(moviesRepo: gh<_i786.MoviesRepo>()),
     );
+    gh.lazySingleton<_i605.SearchUseCase>(
+      () => _i605.SearchUseCase(moviesRepo: gh<_i786.MoviesRepo>()),
+    );
     gh.factory<_i825.HomeTabCubit>(
       () => _i825.HomeTabCubit(
         carouselMoviesUseCase: gh<_i1050.CarouselMoviesUseCase>(),
@@ -73,6 +79,9 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSource: gh<_i432.AuthRemoteDataSource>(),
         authLocalDataSource: gh<_i485.AuthLocalDataSource>(),
       ),
+    );
+    gh.factory<_i267.SearchCubit>(
+      () => _i267.SearchCubit(searchUseCase: gh<_i605.SearchUseCase>()),
     );
     gh.singleton<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(authRepository: gh<_i787.AuthRepository>()),

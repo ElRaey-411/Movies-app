@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/di/service_locator.dart';
+import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/widgets/movie_item.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/main_layout_provider.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/browse_tab/cubit/browse_cubit.dart';
@@ -22,7 +23,7 @@ class BrowseTab extends StatelessWidget {
           child: BlocBuilder<BrowseCubit, BrowseState>(
             builder: (context, state) {
               if (state is BrowseLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator(color: ColorsManager.yellow));
               } else if (state is BrowseError) {
                 return Center(child: Text(state.message));
               } else if (state is BrowseSuccess) {

@@ -10,7 +10,6 @@ class BrowseCubit extends Cubit<BrowseState> {
 
   void getMovies({String? genres, int? limit}) async {
     emit(BrowseLoading());
-    print("GENRE REQUESTED => $genres");
     final result = await browseUseCase(genres: genres, limit: limit);
     result.fold(
       (failure) {
