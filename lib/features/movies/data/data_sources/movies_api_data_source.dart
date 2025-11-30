@@ -1,16 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/resources/const_manager.dart';
 import '../models/movie.dart';
 import 'movies_data_source.dart';
 
+@LazySingleton(as: MoviesDataSource)
 class MoviesApiDataSource implements MoviesDataSource {
-  final Dio dio;
-  MoviesApiDataSource({required this.dio});
+  final Dio dio = Dio(BaseOptions(baseUrl: MoviesApiConstant.baseUrl));
+  
   @override
   Future<Either<String, List<Movie>>> getMovies({int? limit, String? genre}) async {
     try {
-      final response = await dio.get(MoviesApiConstant.baseUrl+MoviesApiConstant.moviesListEndPoint,
+      final response = await dio.get(MoviesApiConstant.moviesListEndPoint,
         queryParameters: {
           'limit': limit,
           'genre': genre,

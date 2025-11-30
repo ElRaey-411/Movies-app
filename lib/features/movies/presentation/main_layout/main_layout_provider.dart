@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/di/service_locator.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/browse_tab/browse_tab.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/home_tab.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/home_tab_cubit.dart';
@@ -14,17 +15,7 @@ class MainLayoutProvider extends ChangeNotifier {
   int selectedTab = 0;
   List<Widget> tabs = [
     BlocProvider(
-      create: (context) => HomeTabCubit(
-        carouselMoviesUseCase: CarouselMoviesUseCase(
-          moviesRepo: MoviesRepoImpl(
-            dataSource: MoviesApiDataSource(
-              dio: Dio(),
-            ),
-        )
-      ),
-  )..fetchMovies(
-        limit: 5,
-      ),
+      create: (context) => serviceLocator.get<HomeTabCubit>()..fetchMovies(limit: 5),
       child: HomeTab(),
     ),
     SearchTab(),
