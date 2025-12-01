@@ -28,7 +28,6 @@ class CustomTextFormField extends StatelessWidget {
       style: GoogleFonts.roboto(fontSize: 16.sp,fontWeight: FontWeight.w500,color: ColorsManager.white),
       validator: validator,
       controller: controller,
-      
       obscureText: isObscure,
       cursorColor: ColorsManager.white,
       keyboardType:keyboardType ,

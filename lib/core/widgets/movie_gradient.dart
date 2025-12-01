@@ -27,7 +27,6 @@ class MovieGradient extends StatelessWidget {
               return Container(
                 color: Colors.black,
                 child: const Center(child: CircularProgressIndicator(
-                  color: ColorsManager.white,
                 )),
               );
             },

@@ -72,7 +72,6 @@ class _HomeTabState extends State<HomeTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Carousel
           BlocBuilder<HomeTabCarouselCubit, HomeTabCarouselState>(
             builder: (context, state) {
               if (state is HomeTabCarouselLoading) {
@@ -80,7 +79,6 @@ class _HomeTabState extends State<HomeTab> {
                   height: 600.h,
                   child: const Center(
                       child: CircularProgressIndicator(
-                        color: ColorsManager.white,
                       )),
                 );
               } else if (state is HomeTabCarouselOnError) {
@@ -142,9 +140,7 @@ class _HomeTabState extends State<HomeTab> {
                 return SizedBox(
                   height: 300.h,
                   child: const Center(
-                      child: CircularProgressIndicator(
-                        color: ColorsManager.white,
-                      )),
+                      child: CircularProgressIndicator()),
                 );
               } else if (state is HomeTabCategoryOnError) {
                 return Center(

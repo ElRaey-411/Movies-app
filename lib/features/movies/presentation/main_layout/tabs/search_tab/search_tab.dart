@@ -8,6 +8,8 @@ import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/widgets/movie_item.dart';
 import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart';
+import 'package:provider/provider.dart';
+import '../../main_layout_provider.dart';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
@@ -17,31 +19,26 @@ class SearchTab extends StatefulWidget {
 }
 
 class _SearchTabState extends State<SearchTab> {
-  String searchKey = '';
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MainLayoutProvider>(context);
+
     return SafeArea(
       child: Padding(
         padding: REdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
         child: Column(
           children: [
             TextField(
+              cursorColor: ColorsManager.white,
               onChanged: (input) {
-                searchKey = input;
-                if (input.trim().isEmpty) {
-                  context.read<SearchCubit>().resetSearch();
-                } else {
-                  context.read<SearchCubit>().getMovies(queryTerm: input);
-                }
-
-                setState(() {});
+                provider.onSearchChange(input, context);
               },
               style: GoogleFonts.roboto(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: ColorsManager.white,
               ),
-
               decoration: InputDecoration(
                 hintText: "Search",
                 prefixIcon: SvgPicture.asset(IconAssets.search,),
@@ -50,7 +47,7 @@ class _SearchTabState extends State<SearchTab> {
             SizedBox(height: 16.h),
             BlocBuilder<SearchCubit, SearchState>(
               builder: (context, state) {
-                if (searchKey.isEmpty) {
+                if (provider.searchKey.isEmpty) {
                   return Expanded(
                     child: Center(child: Image.asset(ImagesAssets.empity)),
                   );
