@@ -36,6 +36,7 @@ class MainLayoutProvider extends ChangeNotifier {
   int genreIndex = 0;
   int browseGenreIndex = 0;
   int selectedCarouselTab = 0;
+  String searchKey = '';
   List<String> genres = [
     'Crime',
     'Romance',
@@ -78,6 +79,17 @@ class MainLayoutProvider extends ChangeNotifier {
     browseGenreIndex = index;
     notifyListeners();
   }
+
+  void onSearchChange(String input,BuildContext context) {
+    searchKey = input;
+    if (input.trim().isEmpty) {
+      context.read<SearchCubit>().resetSearch();
+    } else {
+      context.read<SearchCubit>().getMovies(queryTerm: input);
+    }
+    notifyListeners();
+  }
+
 
   void onCarouselChange(int index) {
     selectedCarouselTab = index;

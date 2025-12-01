@@ -20,48 +20,55 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  MainLayoutProvider? _provider; // <-- نخزن الريفرنس هنا
+
   bool _fetched = false;
   int? _lastGenreIndex;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final provider = Provider.of<MainLayoutProvider>(context, listen: false);
+
+    // خزّن النسخة من البروفايدر
+    _provider = Provider.of<MainLayoutProvider>(context, listen: false);
+
     final cubit = context.read<HomeTabCategoryCubit>();
 
     if (!_fetched) {
       cubit.fetchCategoryMovies(
-        genre1: provider.genres[provider.genreIndex],
-        genre2: provider.genres[provider.genreIndex + 1],
-        genre3: provider.genres[provider.genreIndex + 2],
+        genre1: _provider!.genres[_provider!.genreIndex],
+        genre2: _provider!.genres[_provider!.genreIndex + 1],
+        genre3: _provider!.genres[_provider!.genreIndex + 2],
       );
       _fetched = true;
-      _lastGenreIndex = provider.genreIndex;
+      _lastGenreIndex = _provider!.genreIndex;
     }
 
-    provider.addListener(_onGenreChange);
+    _provider!.addListener(_onGenreChange);
   }
 
   void _onGenreChange() {
-    final provider = Provider.of<MainLayoutProvider>(context, listen: false);
+    if (_provider == null) return;
 
-    if (_lastGenreIndex == provider.genreIndex) return;
-    _lastGenreIndex = provider.genreIndex;
+    if (_lastGenreIndex == _provider!.genreIndex) return;
+    _lastGenreIndex = _provider!.genreIndex;
 
     final cubit = context.read<HomeTabCategoryCubit>();
+
     cubit.fetchCategoryMovies(
-      genre1: provider.genres[provider.genreIndex],
-      genre2: provider.genres[provider.genreIndex + 1],
-      genre3: provider.genres[provider.genreIndex + 2],
+      genre1: _provider!.genres[_provider!.genreIndex],
+      genre2: _provider!.genres[_provider!.genreIndex + 1],
+      genre3: _provider!.genres[_provider!.genreIndex + 2],
     );
   }
 
   @override
   void dispose() {
-    final provider = Provider.of<MainLayoutProvider>(context, listen: false);
-    provider.removeListener(_onGenreChange);
+    _provider?.removeListener(_onGenreChange);
+
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +79,6 @@ class _HomeTabState extends State<HomeTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Carousel
           BlocBuilder<HomeTabCarouselCubit, HomeTabCarouselState>(
             builder: (context, state) {
               if (state is HomeTabCarouselLoading) {
@@ -80,7 +86,6 @@ class _HomeTabState extends State<HomeTab> {
                   height: 600.h,
                   child: const Center(
                       child: CircularProgressIndicator(
-                        color: ColorsManager.white,
                       )),
                 );
               } else if (state is HomeTabCarouselOnError) {
@@ -142,9 +147,7 @@ class _HomeTabState extends State<HomeTab> {
                 return SizedBox(
                   height: 300.h,
                   child: const Center(
-                      child: CircularProgressIndicator(
-                        color: ColorsManager.white,
-                      )),
+                      child: CircularProgressIndicator()),
                 );
               } else if (state is HomeTabCategoryOnError) {
                 return Center(

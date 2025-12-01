@@ -6,6 +6,7 @@ import 'package:movies_app/core/resources/colors_manager.dart';
 class ThemeManager {
   static final ThemeData light = ThemeData();
   static final ThemeData dark = ThemeData(
+
     scaffoldBackgroundColor: ColorsManager.black,
     appBarTheme: AppBarThemeData(
       backgroundColor: ColorsManager.black,
