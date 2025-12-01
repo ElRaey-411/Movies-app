@@ -16,6 +16,7 @@ class MoviesRepoImpl implements MoviesRepo {
     try {
       final result = await dataSource.getMovies(
         limit: limit,
+        genre: genre,
       );
       return result.fold(
         (failure) => Left(failure),
