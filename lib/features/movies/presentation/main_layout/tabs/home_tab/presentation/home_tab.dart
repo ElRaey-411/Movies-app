@@ -20,7 +20,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  MainLayoutProvider? _provider; // <-- نخزن الريفرنس هنا
+  MainLayoutProvider? _provider;
 
   bool _fetched = false;
   int? _lastGenreIndex;
@@ -29,7 +29,6 @@ class _HomeTabState extends State<HomeTab> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // خزّن النسخة من البروفايدر
     _provider = Provider.of<MainLayoutProvider>(context, listen: false);
 
     final cubit = context.read<HomeTabCategoryCubit>();

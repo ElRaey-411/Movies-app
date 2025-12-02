@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,25 +38,18 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 200.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: Avatar.avatars.length,
-                        itemBuilder: (context, index) {
-                          bool isSelected =
-                              provider.selectedAvatar ==
-                              Avatar.avatars[index].id;
-                          return GestureDetector(
-                            onTap: () {
-                              provider.pickAvatarImage(
-                                Avatar.avatars[index].id,
-                              );
-                            },
-                            child: Image.asset(
-                              Avatar.avatars[index].bath,
-                              fit: isSelected ? BoxFit.cover : null,
-                            ),
-                          );
-                        },
+                      child: CarouselSlider(
+                        items: Avatar.avatars.map((avatar) {
+                          return Image.asset(avatar.bath, fit: BoxFit.cover);
+                        }).toList(),
+                        options: CarouselOptions(
+                          onPageChanged: (index, reason) {
+                            provider.pickAvatarImage(index);
+                          },
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.45,
+                          viewportFraction: 0.56,
+                        ),
                       ),
                     ),
                     SizedBox(height: 24.h),
@@ -91,7 +85,7 @@ class RegisterScreen extends StatelessWidget {
                         icon: Icon(
                           provider.visiblePassword
                               ? Icons.visibility_off_rounded
-                              : Icons.visibility
+                              : Icons.visibility,
                         ),
                       ),
                     ),
@@ -109,7 +103,7 @@ class RegisterScreen extends StatelessWidget {
                         icon: Icon(
                           provider.visibleConfirmPassword
                               ? Icons.visibility_off_rounded
-                              : Icons.visibility
+                              : Icons.visibility,
                         ),
                       ),
                     ),
@@ -153,19 +147,18 @@ class RegisterScreen extends StatelessWidget {
                       child: CustomElevatedButton(
                         text: "Create Account",
                         onPress: () {
-                         if(provider.formKey.currentState?.validate() == false) return;
-                            BlocProvider.of<AuthCubit>(context).register(
-                              RegisterRequest(
-                                name: provider.nameController.text,
-                                email: provider.emailController.text,
-                                password: provider.passwordController.text,
-                                confirmPassword:
-                                    provider.confirmPasswordController.text,
-                                phone: provider.phoneController.text,
-                                avaterId: provider.selectedAvatar,
-                              ),
-                            );
-                          
+                          if (provider.formKey.currentState?.validate() == false) return;
+                          BlocProvider.of<AuthCubit>(context).register(
+                            RegisterRequest(
+                              name: provider.nameController.text,
+                              email: provider.emailController.text,
+                              password: provider.passwordController.text,
+                              confirmPassword:
+                                  provider.confirmPasswordController.text,
+                              phone: provider.phoneController.text,
+                              avaterId: provider.selectedAvatar,
+                            ),
+                          );
                         },
                       ),
                     ),
