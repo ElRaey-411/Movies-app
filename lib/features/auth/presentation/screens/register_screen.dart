@@ -47,8 +47,8 @@ class RegisterScreen extends StatelessWidget {
                             provider.pickAvatarImage(index);
                           },
                           enlargeCenterPage: true,
-                          enlargeFactor: 0.45,
-                          viewportFraction: 0.56,
+                          enlargeFactor: 0.55,
+                          viewportFraction: 0.55,
                         ),
                       ),
                     ),
