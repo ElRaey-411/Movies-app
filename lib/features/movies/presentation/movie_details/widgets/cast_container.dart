@@ -24,6 +24,8 @@ class CastContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             child: SafeNetworkImage(
               url: cast.urlSmallImage,
+              width: 80.w,
+              height: 80.h,
             ),
           ),
           SizedBox(width: 12.w,),
