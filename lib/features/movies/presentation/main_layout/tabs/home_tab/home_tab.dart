@@ -24,41 +24,44 @@ class _HomeTabState extends State<HomeTab> {
 
   bool _fetched = false;
   int? _lastGenreIndex;
-
+  bool _listenerAdded = false;
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
+     super.didChangeDependencies();
 
-    _provider = Provider.of<MainLayoutProvider>(context, listen: false);
+  _provider = Provider.of<MainLayoutProvider>(context, listen: false);
+  final cubit = context.read<HomeTabCategoryCubit>();
 
-    final cubit = context.read<HomeTabCategoryCubit>();
-
-    if (!_fetched) {
-      cubit.fetchCategoryMovies(
-        genre1: _provider!.genres[_provider!.genreIndex],
-        genre2: _provider!.genres[_provider!.genreIndex + 1],
-        genre3: _provider!.genres[_provider!.genreIndex + 2],
-      );
-      _fetched = true;
-      _lastGenreIndex = _provider!.genreIndex;
-    }
-
-    _provider!.addListener(_onGenreChange);
-  }
-
-  void _onGenreChange() {
-    if (_provider == null) return;
-
-    if (_lastGenreIndex == _provider!.genreIndex) return;
-    _lastGenreIndex = _provider!.genreIndex;
-
-    final cubit = context.read<HomeTabCategoryCubit>();
-
+  if (!_fetched) {
     cubit.fetchCategoryMovies(
       genre1: _provider!.genres[_provider!.genreIndex],
       genre2: _provider!.genres[_provider!.genreIndex + 1],
       genre3: _provider!.genres[_provider!.genreIndex + 2],
     );
+    _fetched = true;
+    _lastGenreIndex = _provider!.genreIndex;
+  }
+
+  if (!_listenerAdded) {
+    _provider!.addListener(_onGenreChange);
+    _listenerAdded = true;
+  }
+  }
+
+  void _onGenreChange() {
+    if (!mounted) return;
+  if (_provider == null) return;
+
+  if (_lastGenreIndex == _provider!.genreIndex) return;
+  _lastGenreIndex = _provider!.genreIndex;
+
+  final cubit = context.read<HomeTabCategoryCubit>();
+
+  cubit.fetchCategoryMovies(
+    genre1: _provider!.genres[_provider!.genreIndex],
+    genre2: _provider!.genres[_provider!.genreIndex + 1],
+    genre3: _provider!.genres[_provider!.genreIndex + 2],
+  );
   }
 
   @override
