@@ -52,7 +52,14 @@ class BrowseTab extends StatelessWidget {
                               color: ColorsManager.yellow)),
                         );
                       } else if (state is BrowseError) {
-                        return Center(child: Text(state.message));
+                        return Expanded(
+                          child: Center(
+                            child: Text(
+                              state.message,
+                              style: TextStyle(color: ColorsManager.red),
+                            ),
+                          ),
+                        );
                       } else if (state is BrowseSuccess) {
                         List<MovieSummaryEntity> movies = state.movies;
                         return Expanded(
