@@ -67,16 +67,15 @@ import 'package:movies_app/features/movies/domain/use_cases/search_use_case.dart
     as _i584;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/browse_tab/cubit/browse_cubit.dart'
     as _i747;
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/home_tab_carousel_cubit.dart'
-    as _i432;
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/home_tab_category_cubit.dart'
-    as _i859;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart'
     as _i830;
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_details_cubit.dart'
     as _i590;
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_suggestions_cubit.dart'
     as _i582;
+
+import '../../features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_carousel_cubit.dart' as _i432;
+import '../../features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_category_cubit.dart' as _i859;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt

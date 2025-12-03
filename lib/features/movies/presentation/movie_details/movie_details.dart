@@ -18,238 +18,245 @@ import 'cubit/movie_suggestions_cubit.dart';
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: ColorsManager.white,
+            size: 32.sp,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.bookmark_border_outlined,
+              color: ColorsManager.white,
+              size: 32.sp,
+            ),
+          ),
+        ],
+      ),
       body: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
         builder: (context, state) {
           if (state is MovieDetailsLoading) {
             return Center(child: CircularProgressIndicator());
           }
           if (state is MovieDetailsOnError) {
-            return Center(child: Text(state.message));
+            return Padding(
+              padding: REdgeInsets.symmetric(vertical: 300),
+              child: Center(
+                child: Text(
+                  state.message,
+                  style: TextStyle(color: ColorsManager.red),
+                ),
+              ),
+            );
           }
           if (state is MovieDetailsOnSuccess) {
-            final movie = state.movie ;
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                padding: REdgeInsets.only(bottom: 50),
-                child: Column(
-                  children: [
-                    Stack(
+            final movie = state.movie;
+            return SingleChildScrollView(
+              padding: REdgeInsets.only(bottom: 50),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 680.h,
+                    child: Stack(
                       alignment: Alignment.center,
                       children: [
                         MovieGradient(
-                          pic: movie.mediumCoverImage??'',
-                          movieTitle: movie.title??'',
+                          pic: movie.mediumCoverImage ?? '',
+                          movieTitle: movie.title ?? '',
                           movieYear: movie.year.toString(),
                         ),
-                        Positioned(
-                          top: 36.h,
-                          left: 12.w,
-                          right: 12.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: ColorsManager.white,
-                                  size: 32.sp,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.bookmark_border_outlined,
-                                  color: ColorsManager.white,
-                                  size: 32.sp,
-                                ),
-                              ),
-                            ],
-                          ),
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(IconAssets.play),
                         ),
-                        InkWell(onTap: () {}, child: SvgPicture.asset(IconAssets.play)),
                       ],
                     ),
-                    Padding(
-                      padding: REdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomElevatedButton(
-                            text: "Watch",
-                            onPress: () {},
-                            color: ColorsManager.red,
-                            textColor: ColorsManager.white,
-                          ),
-                          SizedBox(height: 20.h),
-                          Row(
-                            children: [
-                              CustomContainer(text: movie.runtime.toString(), icon: IconAssets.clock),
-                              SizedBox(width: 10.w),
-                              CustomContainer(text: movie.likeCount.toString(), icon: IconAssets.heart),
-                              SizedBox(width: 10.w),
-                              CustomContainer(text: movie.rating.toString(), icon: IconAssets.star),
-                            ],
-                          ),
-                          SizedBox(height: 24.h),
-                          Text(
-                            "Screen Shots",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
+                  ),
+                  Padding(
+                    padding: REdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomElevatedButton(
+                          text: "Watch",
+                          onPress: () {},
+                          color: ColorsManager.red,
+                          textColor: ColorsManager.white,
+                        ),
+                        SizedBox(height: 20.h),
+                        Row(
+                          children: [
+                            CustomContainer(
+                              text: movie.runtime.toString(),
+                              icon: IconAssets.clock,
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Visibility(
-                            visible:movie.mediumScreenshotImage1!=null,
-                            child: ScreenShotsDisplay(
-                              screenShot: movie.mediumScreenshotImage1??'',
+                            SizedBox(width: 10.w),
+                            CustomContainer(
+                              text: movie.likeCount.toString(),
+                              icon: IconAssets.heart,
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Visibility(
-                            visible:movie.mediumScreenshotImage2!=null,
-                            child: ScreenShotsDisplay(
-                              screenShot: movie.mediumScreenshotImage2??'',
+                            SizedBox(width: 10.w),
+                            CustomContainer(
+                              text: movie.rating.toString(),
+                              icon: IconAssets.star,
                             ),
+                          ],
+                        ),
+                        SizedBox(height: 24.h),
+                        Text(
+                          "Screen Shots",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.white,
                           ),
-                          SizedBox(height: 20.h),
-                          Visibility(
-                            visible:movie.mediumScreenshotImage3!=null,
-                            child: ScreenShotsDisplay(
-                              screenShot: movie.mediumScreenshotImage3??'',
-                            ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Visibility(
+                          visible: movie.mediumScreenshotImage1 != null,
+                          child: ScreenShotsDisplay(
+                            screenShot: movie.mediumScreenshotImage1 ?? '',
                           ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            "Similar",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                            ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Visibility(
+                          visible: movie.mediumScreenshotImage2 != null,
+                          child: ScreenShotsDisplay(
+                            screenShot: movie.mediumScreenshotImage2 ?? '',
                           ),
-                          SizedBox(height: 20.h),
-                          BlocBuilder<MovieSuggestionsCubit, MovieSuggestionsState>(
-                            builder: (context, state) {
-                              if (state is MovieSuggestionsLoading) {
-                                return Center(child: CircularProgressIndicator());
-                                }
-                              if (state is MovieSuggestionsOnError) {
-                                return Center(child: Text(state.message));
-                              }
-                              if (state is MovieSuggestionsOnSuccess) {
-                                final movies = state.movies;
-                                return SimilarDisplay(movies: movies);
-                              }else{
-                                return SizedBox();
-                              }
-                            }),
-                          SizedBox(height: 20.h),
-                          Text(
-                            "Summary",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                            ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Visibility(
+                          visible: movie.mediumScreenshotImage3 != null,
+                          child: ScreenShotsDisplay(
+                            screenShot: movie.mediumScreenshotImage3 ?? '',
                           ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            movie.descriptionFull!.trim().isEmpty? "No Summary Available" :movie.descriptionFull!
-                            ,style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: ColorsManager.white,
-                            ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "Similar",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.white,
                           ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            "Cast",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                            ),
+                        ),
+                        SizedBox(height: 20.h),
+                        BlocBuilder<
+                          MovieSuggestionsCubit,
+                          MovieSuggestionsState
+                        >(
+                          builder: (context, state) {
+                            if (state is MovieSuggestionsLoading) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (state is MovieSuggestionsOnError) {
+                              return Center(
+                                child: Text(
+                                  state.message,
+                                  style: TextStyle(
+                                    color: ColorsManager.red,
+                                  ),
+                                ),
+                              );
+                            }
+                            if (state is MovieSuggestionsOnSuccess) {
+                              final movies = state.movies;
+                              return SimilarDisplay(movies: movies);
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "Summary",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.white,
                           ),
-                          Column(
-                            children: List.generate(
-                              movie.cast?.length ?? 0,
-                                  (index) => Padding(
-                                padding: EdgeInsets.only(bottom: 10.h),
-                                child: CastContainer(cast: movie.cast![index]),
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          movie.descriptionFull!.trim().isEmpty
+                              ? "No Summary Available"
+                              : movie.descriptionFull!,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: ColorsManager.white,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "Cast",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.white,
+                          ),
+                        ),
+                        Column(
+                          children: List.generate(
+                            movie.cast?.length ?? 0,
+                            (index) => Padding(
+                              padding: EdgeInsets.only(bottom: 10.h),
+                              child: CastContainer(
+                                cast: movie.cast![index],
                               ),
                             ),
                           ),
-                          Visibility(
-                          visible: movie.cast?.isEmpty==true ?true:false,
-                            child: Text(
+                        ),
+                        Visibility(
+                          visible: movie.cast?.isEmpty == true
+                              ? true
+                              : false,
+                          child: Text(
                             "No Cast Available",
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                               color: ColorsManager.white,
                             ),
-                          ),),
-                          SizedBox(height: 20.h),
-                          Text(
-                            "Genres",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                            ),
                           ),
-                          SizedBox(height: 20.h),
-                          GenresDisplay(genre: movie.genres),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          "Genres",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.white,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        GenresDisplay(genre: movie.genres),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-                Positioned(
-                  top: 36.h,
-                  left: 12.w,
-                  right: 12.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: ColorsManager.white,
-                          size: 32.sp,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.bookmark_border_outlined,
-                          color: ColorsManager.white,
-                          size: 32.sp,
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-          ]
+                ],
+              ),
             );
-          }else{
+          } else {
             return SizedBox();
           }
-        }
+        },
       ),
     );
   }

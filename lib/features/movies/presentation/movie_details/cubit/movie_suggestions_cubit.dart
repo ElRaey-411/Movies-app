@@ -16,7 +16,7 @@ class MovieSuggestionsCubit extends Cubit<MovieSuggestionsState> {
     emit(MovieSuggestionsLoading());
     final result = await movieSuggestionsUseCase(movieId: movieId);
     result.fold(
-          (failure) => emit(MovieSuggestionsOnError(failure)),
+          (failure) => emit(MovieSuggestionsOnError(failure.message)),
           (movies) => emit(MovieSuggestionsOnSuccess(movies)),
     );
   }

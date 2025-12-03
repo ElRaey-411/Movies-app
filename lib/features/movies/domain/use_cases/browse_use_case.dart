@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/errors/errors/failure.dart';
 import '../entities/movie_summary_entity.dart';
 import '../repos/movies_repo.dart';
 
@@ -9,7 +10,7 @@ class BrowseUseCase {
   final MoviesRepo moviesRepo;
   BrowseUseCase({required this.moviesRepo});
 
-  Future<Either<String, List<MovieSummaryEntity>>> call({
+  Future<Either<Failure, List<MovieSummaryEntity>>> call({
     int? limit,
     String? genres,
   }) async {

@@ -57,10 +57,13 @@ class _SearchTabState extends State<SearchTab> {
                     child: Center(child: CircularProgressIndicator(color: ColorsManager.yellow)),
                   );
                 } else if (state is SearchError) {
-                  return Center(
-                    child: Text(
-                      state.message,
-                      style: TextStyle(color: ColorsManager.yellow),
+                  return Padding(
+                    padding: REdgeInsets.symmetric(vertical: 300),
+                    child: Center(
+                      child: Text(
+                        state.message,
+                        style: TextStyle(color: ColorsManager.red),
+                      ),
                     ),
                   );
                 } else if (state is SearchSuccess) {

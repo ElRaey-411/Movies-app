@@ -12,14 +12,16 @@ class CustomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: REdgeInsets.symmetric(vertical: 12,horizontal: 12),
-        decoration: BoxDecoration(
-          color: ColorsManager.grey,
-          borderRadius: BorderRadius.circular(16.r),
-        ),
+    return Container(
+      padding: REdgeInsets.symmetric(vertical: 12,horizontal: 12),
+      decoration: BoxDecoration(
+        color: ColorsManager.grey,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: SizedBox(
+        width: 102.w,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Visibility(
               visible: icon==null ?false:true,

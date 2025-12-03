@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_network_image/safe_network_image.dart';
 
 import '../../../../../core/resources/colors_manager.dart';
 import '../../../data/models/movie_details/Cast.dart';
@@ -21,15 +22,19 @@ class CastContainer extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
-            child: Image.network(cast.urlSmallImage)
+            child: SafeNetworkImage(
+              url: cast.urlSmallImage,
+            ),
           ),
           SizedBox(width: 12.w,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Name : ${cast.name}", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
-              Text("Character : ${cast.characterName} ", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Name : ${cast.name}", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
+                Text("Character : ${cast.characterName} ", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
+              ],
+            ),
           )
         ],
       ),

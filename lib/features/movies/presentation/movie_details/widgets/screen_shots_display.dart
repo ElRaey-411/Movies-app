@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_network_image/safe_network_image.dart';
 
 class ScreenShotsDisplay extends StatelessWidget {
   const ScreenShotsDisplay({super.key, required this.screenShot,});
@@ -11,7 +12,12 @@ class ScreenShotsDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.r),
-      child: Image.network(screenShot??'', fit: BoxFit.cover, width: double.infinity, height: 200.h,),
+      child: SafeNetworkImage(
+        url: screenShot,
+        fit: BoxFit.cover,
+        height: 200.h,
+        width: double.infinity,
+      )
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../../../core/resources/colors_manager.dart';
 import '../../../../../../../../core/widgets/movie_item.dart';
-import '../../../../../../domain/entities/movie_summary_entity.dart';
+import '../../../../../domain/entities/movie_summary_entity.dart';
 
 
 class CategoryListView extends StatelessWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
+import 'package:safe_network_image/safe_network_image.dart';
 
 class MovieItem extends StatelessWidget {
   const MovieItem({super.key, required this.pic, required this.rate,required this.movieId});
@@ -20,7 +21,10 @@ class MovieItem extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(pic,fit: BoxFit.fill)
+            child: SafeNetworkImage(
+              url: pic,
+              fit: BoxFit.cover,
+            )
           ),
           Positioned(
             top: 10,

@@ -13,7 +13,7 @@ class SearchCubit extends Cubit<SearchState> {
     final result = await searchUseCase(queryTerm: queryTerm);
     result.fold(
       (failure) {
-        emit(SearchError(message: failure));
+        emit(SearchError(message: failure.message));
       },
       (movies) {
         emit(SearchSuccess(movies: movies));

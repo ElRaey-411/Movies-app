@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_network_image/safe_network_image.dart';
 import '../../../../../core/resources/colors_manager.dart';
 
 class MovieGradient extends StatelessWidget {
@@ -15,11 +16,11 @@ class MovieGradient extends StatelessWidget {
       height: 680.h,
       child: Stack(
         children: [
-          Image.network(
-            pic,
-            fit: BoxFit.fill,
-            width: double.infinity,
+          SafeNetworkImage(
+            url: pic,
+            fit: BoxFit.cover,
             height: 680.h,
+            width: double.infinity,
           ),
           Container(
             width: double.infinity,

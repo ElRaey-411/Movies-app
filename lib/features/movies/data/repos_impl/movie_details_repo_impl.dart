@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:movies_app/core/errors/errors/failure.dart';
 import '../../domain/entities/movie_detials_entity.dart';
 import '../../domain/repos/movie_details_repo.dart';
 import '../data_sources/movie_details_data_source/movie_details_data_source.dart';
@@ -11,7 +12,7 @@ class MoviesDetailsRepoImpl implements MovieDetailsRepo {
   final MovieDetailsDataSource dataSource;
 
   @override
-  Future<Either<String, MovieDetailsEntity>> getMovies({
+  Future<Either<Failure, MovieDetailsEntity>> getMovies({
    required int movieId,
   }) async {
     try {
@@ -24,7 +25,9 @@ class MoviesDetailsRepoImpl implements MovieDetailsRepo {
             Right(movie.toMovieDetailsEntity()),
       );
     } catch (e) {
-      return Left(e.toString());
+      return Left(Failure(
+          message: "Unexpected error occurred: ${e.toString()}"
+      ));
     }
   }
 }
