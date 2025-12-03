@@ -13,7 +13,7 @@ class BrowseCubit extends Cubit<BrowseState> {
     final result = await browseUseCase( limit: limit, genres: genres);
     result.fold(
       (failure) {
-        emit(BrowseError(message: failure));
+        emit(BrowseError(message: failure.message));
       },
       (movies) {
         emit(BrowseSuccess(movies: movies));

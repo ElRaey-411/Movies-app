@@ -2,15 +2,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/widgets/animated_movie_bg.dart';
-import 'package:movies_app/core/widgets/movie_item.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/cubit_states.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/home_tab_carousel_cubit.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/home_tab_category_cubit.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/widgets/category_list_view.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/widgets/animated_movie_bg.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/widgets/category_list_view.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../../core/resources/colors_manager.dart';
-import '../../../main_layout_provider.dart';
+import '../../../../../../core/resources/colors_manager.dart';
+import '../../../../../../core/widgets/movie_item.dart';
+import '../../main_layout_provider.dart';
+import 'cubits/cubit_states.dart';
+import 'cubits/home_tab_carousel_cubit.dart';
+import 'cubits/home_tab_category_cubit.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -88,10 +88,13 @@ class _HomeTabState extends State<HomeTab> {
                       )),
                 );
               } else if (state is HomeTabCarouselOnError) {
-                return Center(
-                  child: Text(
-                    state.message,
-                    style: TextStyle(color: ColorsManager.red),
+                return Padding(
+                  padding: REdgeInsets.symmetric(vertical: 300),
+                  child: Center(
+                    child: Text(
+                      state.message,
+                      style: TextStyle(color: ColorsManager.red),
+                    ),
                   ),
                 );
               } else if (state is HomeTabCarouselOnSuccess) {
@@ -141,7 +144,6 @@ class _HomeTabState extends State<HomeTab> {
             },
           ),
 
-          // Category Lists
           BlocBuilder<HomeTabCategoryCubit, HomeTabCategoryState>(
             builder: (context, state) {
               if (state is HomeTabCategoryLoading) {
@@ -151,10 +153,13 @@ class _HomeTabState extends State<HomeTab> {
                       child: CircularProgressIndicator()),
                 );
               } else if (state is HomeTabCategoryOnError) {
-                return Center(
-                  child: Text(
-                    state.message,
-                    style: TextStyle(color: ColorsManager.red),
+                return Padding(
+                  padding: REdgeInsets.symmetric(vertical: 50),
+                  child: Center(
+                    child: Text(
+                      state.message,
+                      style: TextStyle(color: ColorsManager.red),
+                    ),
                   ),
                 );
               } else if (state is HomeTabCategoryOnSuccess) {

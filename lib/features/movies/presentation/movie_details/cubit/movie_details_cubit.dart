@@ -16,7 +16,7 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
     emit(MovieDetailsLoading());
     final result = await movieDetailsUseCase(movieId: movieId);
     result.fold(
-          (failure) => emit(MovieDetailsOnError(failure)),
+          (failure) => emit(MovieDetailsOnError(failure.message)),
           (movies) => emit(MovieDetailsOnSuccess(movies)),
     );
   }

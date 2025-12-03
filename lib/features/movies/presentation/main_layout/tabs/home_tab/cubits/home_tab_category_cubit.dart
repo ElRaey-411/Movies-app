@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../domain/entities/movie_summary_entity.dart';
-import '../../../../../../domain/use_cases/home_tab_categorise_use_case.dart';
+import '../../../../../domain/entities/movie_summary_entity.dart';
+import '../../../../../domain/use_cases/home_tab_categorise_use_case.dart';
 import 'cubit_states.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,7 +27,7 @@ class HomeTabCategoryCubit extends Cubit<HomeTabCategoryState> {
     final result1 = await homeTabCategoriseUseCase(genre: genre1);
     result1.fold(
           (failure) {
-        emit(HomeTabCategoryOnError(failure));
+        emit(HomeTabCategoryOnError(failure.message));
         return;
       },
           (movies) => category1 = movies,
@@ -38,7 +38,7 @@ class HomeTabCategoryCubit extends Cubit<HomeTabCategoryState> {
     final result2 = await homeTabCategoriseUseCase(genre: genre2);
     result2.fold(
           (failure) {
-        emit(HomeTabCategoryOnError(failure));
+        emit(HomeTabCategoryOnError(failure.message));
         return;
       },
           (movies) => category2 = movies,
@@ -48,7 +48,7 @@ class HomeTabCategoryCubit extends Cubit<HomeTabCategoryState> {
     final result3 = await homeTabCategoriseUseCase(genre: genre3);
     result3.fold(
           (failure) {
-        emit(HomeTabCategoryOnError(failure));
+        emit(HomeTabCategoryOnError(failure.message));
         return;
       },
           (movies) => category3 = movies,

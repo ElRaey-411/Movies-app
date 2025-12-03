@@ -28,7 +28,15 @@ class MovieDetails extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           if (state is MovieDetailsOnError) {
-            return Center(child: Text(state.message));
+            return Padding(
+              padding: REdgeInsets.symmetric(vertical: 300),
+              child: Center(
+                child: Text(
+                  state.message,
+                  style: TextStyle(color: ColorsManager.red),
+                ),
+              ),
+            );
           }
           if (state is MovieDetailsOnSuccess) {
             final movie = state.movie ;
@@ -144,7 +152,7 @@ class MovieDetails extends StatelessWidget {
                                 return Center(child: CircularProgressIndicator());
                                 }
                               if (state is MovieSuggestionsOnError) {
-                                return Center(child: Text(state.message));
+                                return Center(child: Text(state.message,style: TextStyle(color: ColorsManager.red),));
                               }
                               if (state is MovieSuggestionsOnSuccess) {
                                 final movies = state.movies;

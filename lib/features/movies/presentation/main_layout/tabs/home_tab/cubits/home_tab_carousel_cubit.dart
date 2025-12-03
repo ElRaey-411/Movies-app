@@ -16,7 +16,7 @@ class HomeTabCarouselCubit extends Cubit<HomeTabCarouselState> {
     emit(HomeTabCarouselLoading());
     final result = await carouselMoviesUseCase(limit: limit);
     result.fold(
-      (failure) => emit(HomeTabCarouselOnError(failure)),
+      (failure) => emit(HomeTabCarouselOnError(failure.message)),
       (movies) => emit(HomeTabCarouselOnSuccess(movies)),
     );
   }

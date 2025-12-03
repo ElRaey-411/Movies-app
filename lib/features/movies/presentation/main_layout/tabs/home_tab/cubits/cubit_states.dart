@@ -1,4 +1,5 @@
-import '../../../../../../domain/entities/movie_summary_entity.dart';
+
+import '../../../../../domain/entities/movie_summary_entity.dart';
 
 abstract class HomeTabCarouselState {}
 

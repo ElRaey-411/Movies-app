@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.dart';
+import '../../../../core/errors/errors/failure.dart';
 import '../../domain/repos/movies_repo.dart';
 import '../data_sources/movies_data_source/movies_data_source.dart';
 
@@ -11,7 +12,7 @@ class MoviesRepoImpl implements MoviesRepo {
   final MoviesDataSource dataSource;
 
   @override
-  Future<Either<String, List<MovieSummaryEntity>>> getMovies({
+  Future<Either<Failure, List<MovieSummaryEntity>>> getMovies({
     int? limit,
     String? genres,
     String? queryTerm,
@@ -28,7 +29,9 @@ class MoviesRepoImpl implements MoviesRepo {
             Right(movies.map((movie) => movie.toMovieSummaryEntity()).toList()),
       );
     } catch (e) {
-      return Left(e.toString());
+      return Left(Failure(
+          message: "Unexpected error occurred: ${e.toString()}"
+      ));
     }
   }
 }

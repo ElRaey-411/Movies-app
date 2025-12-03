@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:movies_app/core/errors/errors/failure.dart';
 import 'package:movies_app/core/resources/const_manager.dart';
 import '../../models/movies/movie.dart';
 import 'movie_suggestions_data_source.dart';
@@ -10,7 +11,7 @@ class MovieSuggestionsApiDataSource implements MovieSuggestionsDataSource {
   final Dio dio = Dio(BaseOptions(baseUrl: MoviesApiConstant.baseUrl));
 
   @override
-  Future<Either<String, List<Movie>>> getMovies({
+  Future<Either<Failure, List<Movie>>> getMovies({
 required int movieId,
   }) async {
     try {
@@ -24,7 +25,7 @@ required int movieId,
         final data = response.data['data'];
         final moviesList = data['movies'];
         if (moviesList == null) {
-          return Right([]);
+          return Left(Failure(message: "No movies found."));
         }
 
         final movies = (moviesList as List)
@@ -33,10 +34,10 @@ required int movieId,
 
         return Right(movies);
       } else {
-        return Left('Server Error: ${response.statusCode}');
+        throw Exception("Server error: ${response.statusCode}");
       }
     } catch (e) {
-      return Left(e.toString());
+      return Left(Failure(message: "Unexpected error occurred. Please try again."));
     }
   }
 }

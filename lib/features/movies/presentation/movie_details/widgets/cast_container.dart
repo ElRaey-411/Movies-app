@@ -24,12 +24,14 @@ class CastContainer extends StatelessWidget {
             child: Image.network(cast.urlSmallImage)
           ),
           SizedBox(width: 12.w,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Name : ${cast.name}", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
-              Text("Character : ${cast.characterName} ", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Name : ${cast.name}", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
+                Text("Character : ${cast.characterName} ", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500, color: ColorsManager.white)),
+              ],
+            ),
           )
         ],
       ),
