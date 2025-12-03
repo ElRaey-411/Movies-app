@@ -28,8 +28,8 @@ class MoviesApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        routes: RoutesManager.routes,
-        initialRoute: RoutesManager.login,
+        onGenerateRoute: RoutesManager.generateRoute,
+        initialRoute: RoutesManager.mainLayout,
         theme: ThemeManager.light,
         darkTheme: ThemeManager.dark,
         themeMode: ThemeMode.dark,

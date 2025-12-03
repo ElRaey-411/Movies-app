@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.dart';
 import '../../domain/repos/movies_repo.dart';
-import '../data_sources/movies_data_source.dart';
+import '../data_sources/movies_data_source/movies_data_source.dart';
 
 @Singleton(as: MoviesRepo)
 class MoviesRepoImpl implements MoviesRepo {

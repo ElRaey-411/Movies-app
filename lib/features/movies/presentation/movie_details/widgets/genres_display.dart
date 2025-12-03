@@ -6,25 +6,24 @@ import 'custom_container.dart';
 class GenresDisplay extends StatelessWidget {
   const GenresDisplay({super.key, required this.genre});
 
-  final String genre;
+  final List<String>? genre;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-        padding: EdgeInsets.zero,
-        crossAxisCount: 3,
-        mainAxisSpacing: 10.h,
-        crossAxisSpacing: 12.w,
-        childAspectRatio: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          CustomContainer(text: genre),
-          CustomContainer(text: genre),
-          CustomContainer(text: genre),
-          CustomContainer(text: genre),
-          CustomContainer(text: genre),
-        ]
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: genre?.length?? 0,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8.h,
+        crossAxisSpacing: 6.w,
+        childAspectRatio: 3,
+      ),
+      itemBuilder: (context, index) {
+        return CustomContainer(text: genre![index],);
+      },
     );
   }
 }

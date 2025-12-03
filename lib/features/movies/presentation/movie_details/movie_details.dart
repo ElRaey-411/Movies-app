@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
@@ -9,27 +10,212 @@ import 'package:movies_app/features/movies/presentation/movie_details/widgets/ge
 import 'package:movies_app/features/movies/presentation/movie_details/widgets/movie_gradient.dart';
 import 'package:movies_app/features/movies/presentation/movie_details/widgets/screen_shots_display.dart';
 import 'package:movies_app/features/movies/presentation/movie_details/widgets/similar_display.dart';
-
 import '../../../../core/resources/assets_manager.dart';
+import 'cubit/cubit_states.dart';
+import 'cubit/movie_details_cubit.dart';
+import 'cubit/movie_suggestions_cubit.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: REdgeInsets.only(bottom: 50),
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
+      body: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+        builder: (context, state) {
+          if (state is MovieDetailsLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is MovieDetailsOnError) {
+            return Center(child: Text(state.message));
+          }
+          if (state is MovieDetailsOnSuccess) {
+            final movie = state.movie ;
+            return Stack(
               children: [
-                MovieGradient(
-                  pic: "assets/images/doctor_strange.png",
-                  movieTitle: "Doctor Strange in the Multiverse of Madness",
-                  movieYear: "2022",
+                SingleChildScrollView(
+                padding: REdgeInsets.only(bottom: 50),
+                child: Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        MovieGradient(
+                          pic: movie.mediumCoverImage??'',
+                          movieTitle: movie.title??'',
+                          movieYear: movie.year.toString(),
+                        ),
+                        Positioned(
+                          top: 36.h,
+                          left: 12.w,
+                          right: 12.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorsManager.white,
+                                  size: 32.sp,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.bookmark_border_outlined,
+                                  color: ColorsManager.white,
+                                  size: 32.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        InkWell(onTap: () {}, child: SvgPicture.asset(IconAssets.play)),
+                      ],
+                    ),
+                    Padding(
+                      padding: REdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomElevatedButton(
+                            text: "Watch",
+                            onPress: () {},
+                            color: ColorsManager.red,
+                            textColor: ColorsManager.white,
+                          ),
+                          SizedBox(height: 20.h),
+                          Row(
+                            children: [
+                              CustomContainer(text: movie.runtime.toString(), icon: IconAssets.clock),
+                              SizedBox(width: 10.w),
+                              CustomContainer(text: movie.likeCount.toString(), icon: IconAssets.heart),
+                              SizedBox(width: 10.w),
+                              CustomContainer(text: movie.rating.toString(), icon: IconAssets.star),
+                            ],
+                          ),
+                          SizedBox(height: 24.h),
+                          Text(
+                            "Screen Shots",
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Visibility(
+                            visible:movie.mediumScreenshotImage1!=null,
+                            child: ScreenShotsDisplay(
+                              screenShot: movie.mediumScreenshotImage1??'',
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Visibility(
+                            visible:movie.mediumScreenshotImage2!=null,
+                            child: ScreenShotsDisplay(
+                              screenShot: movie.mediumScreenshotImage2??'',
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Visibility(
+                            visible:movie.mediumScreenshotImage3!=null,
+                            child: ScreenShotsDisplay(
+                              screenShot: movie.mediumScreenshotImage3??'',
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Text(
+                            "Similar",
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          BlocBuilder<MovieSuggestionsCubit, MovieSuggestionsState>(
+                            builder: (context, state) {
+                              if (state is MovieSuggestionsLoading) {
+                                return Center(child: CircularProgressIndicator());
+                                }
+                              if (state is MovieSuggestionsOnError) {
+                                return Center(child: Text(state.message));
+                              }
+                              if (state is MovieSuggestionsOnSuccess) {
+                                final movies = state.movies;
+                                return SimilarDisplay(movies: movies);
+                              }else{
+                                return SizedBox();
+                              }
+                            }),
+                          SizedBox(height: 20.h),
+                          Text(
+                            "Summary",
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Text(
+                            movie.descriptionFull!.trim().isEmpty? "No Summary Available" :movie.descriptionFull!
+                            ,style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Text(
+                            "Cast",
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          Column(
+                            children: List.generate(
+                              movie.cast?.length ?? 0,
+                                  (index) => Padding(
+                                padding: EdgeInsets.only(bottom: 10.h),
+                                child: CastContainer(cast: movie.cast![index]),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                          visible: movie.cast?.isEmpty==true ?true:false,
+                            child: Text(
+                            "No Cast Available",
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ColorsManager.white,
+                            ),
+                          ),),
+                          SizedBox(height: 20.h),
+                          Text(
+                            "Genres",
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.white,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          GenresDisplay(genre: movie.genres),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+              ),
                 Positioned(
                   top: 36.h,
                   left: 12.w,
@@ -38,7 +224,9 @@ class MovieDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: ColorsManager.white,
@@ -56,128 +244,12 @@ class MovieDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                InkWell(onTap: () {}, child: SvgPicture.asset(IconAssets.play)),
-              ],
-            ),
-            Padding(
-              padding: REdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomElevatedButton(
-                    text: "Watch",
-                    onPress: () {},
-                    color: ColorsManager.red,
-                    textColor: ColorsManager.white,
-                  ),
-                  SizedBox(height: 20.h),
-                  Row(
-                    children: [
-                      CustomContainer(text: "15", icon: IconAssets.clock),
-                      SizedBox(width: 10.w),
-                      CustomContainer(text: "15", icon: IconAssets.heart),
-                      SizedBox(width: 10.w),
-                      CustomContainer(text: "15", icon: IconAssets.star),
-                    ],
-                  ),
-                  SizedBox(height: 24.h),
-                  Text(
-                    "Screen Shots",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.white,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  ScreenShotsDisplay(
-                    screenShot: "assets/images/large-screenshot1.png",
-                  ),
-                  SizedBox(height: 20.h),
-                  ScreenShotsDisplay(
-                    screenShot: "assets/images/large-screenshot1.png",
-                  ),
-                  SizedBox(height: 20.h),
-                  ScreenShotsDisplay(
-                    screenShot: "assets/images/large-screenshot1.png",
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "Similar",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.white,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  SimilarDisplay(
-                    pic:
-                        "https://yts.lt/assets/images/movies/16_Blocks_2006/medium-cover.jpg",
-                    rate: 5.7,
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "Summary",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.white,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "Following the events of Spider-Man No Way Home, Doctor Strange unwittingly casts a forbidden spell that accidentally opens up the multiverse. With help from Wong and Scarlet Witch, Strange confronts various versions of himself as well as teaming up with the young America Chavez while traveling through various realities and working to restore reality as he knows it. Along the way, Strange and his allies realize they must take on a powerful new adversary who seeks to take over the multiverse.—Blazer346",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: ColorsManager.white,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  CastContainer(
-                    pic:
-                        "https://yts.lt/assets/images/actors/thumb/nm0001667.jpg",
-                    name: "Doctor Strange",
-                    character: "Doctor Strange",
-                  ),
-                  SizedBox(height: 10.h),
-                  CastContainer(
-                    pic:
-                        "https://yts.lt/assets/images/actors/thumb/nm0001667.jpg",
-                    name: "Doctor Strange",
-                    character: "Doctor Strange",
-                  ),
-                  SizedBox(height: 10.h),
-                  CastContainer(
-                    pic:
-                        "https://yts.lt/assets/images/actors/thumb/nm0001667.jpg",
-                    name: "Doctor Strange",
-                    character: "Doctor Strange",
-                  ),
-                  SizedBox(height: 10.h),
-                  CastContainer(
-                    pic:
-                        "https://yts.lt/assets/images/actors/thumb/nm0001667.jpg",
-                    name: "Doctor Strange",
-                    character: "Doctor Strange",
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "Genres",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.white,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  GenresDisplay(genre: "Action"),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ]
+            );
+          }else{
+            return SizedBox();
+          }
+        }
       ),
     );
   }

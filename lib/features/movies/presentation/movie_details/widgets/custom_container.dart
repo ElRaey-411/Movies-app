@@ -14,7 +14,7 @@ class CustomContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: REdgeInsets.symmetric(vertical: 12,horizontal: 26),
+        padding: REdgeInsets.symmetric(vertical: 12,horizontal: 12),
         decoration: BoxDecoration(
           color: ColorsManager.grey,
           borderRadius: BorderRadius.circular(16.r),
@@ -27,7 +27,7 @@ class CustomContainer extends StatelessWidget {
             Visibility(
                 visible: icon==null ?false:true,
                 child: SizedBox(width: 10.w)),
-            Text(text, style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: ColorsManager.white)),
+            Text(text, style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: ColorsManager.white)),
           ],
         ),
       ),

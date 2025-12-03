@@ -15,7 +15,7 @@ class MovieGradient extends StatelessWidget {
       height: 680.h,
       child: Stack(
         children: [
-          Image.asset(
+          Image.network(
             pic,
             fit: BoxFit.fill,
             width: double.infinity,

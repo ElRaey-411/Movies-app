@@ -81,6 +81,7 @@ class _SearchTabState extends State<SearchTab> {
                         return MovieItem(
                           pic: movies[index].largeCoverImage ?? "",
                           rate: movies[index].rating ?? 0,
+                          movieId: movies[index].id ?? 0,
                         );
                       },
                     ),

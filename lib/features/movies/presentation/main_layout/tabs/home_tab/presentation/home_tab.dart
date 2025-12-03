@@ -125,7 +125,9 @@ class _HomeTabState extends State<HomeTab> {
                               .map(
                                 (movie) => MovieItem(
                                 pic: movie.mediumCoverImage ?? '',
-                                rate: movie.rating ?? 0.0),
+                                rate: movie.rating ?? 0.0,
+                                movieId: movie.id ?? 0,
+                              ),
                           )
                               .toList(),
                         ),

@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/widgets/movie_item.dart';
+import '../../../domain/entities/movie_summary_entity.dart';
 
 class SimilarDisplay extends StatelessWidget {
-  const SimilarDisplay({super.key, required this.pic, required this.rate});
+  const SimilarDisplay({super.key, required this.movies});
 
-  final String pic;
-  final double rate;
+ final List<MovieSummaryEntity>? movies;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-        padding: EdgeInsets.zero,
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: movies?.length?? 0,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 16.h,
         crossAxisSpacing: 16.w,
-        childAspectRatio: 7 / 10,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        MovieItem(pic:pic,rate: rate),
-        MovieItem(pic:pic,rate: rate),
-        MovieItem(pic:pic,rate: rate),
-        MovieItem(pic:pic,rate: rate),
-      ]
+        childAspectRatio: 7/10,
+      ),
+      itemBuilder: (context, index) {
+        return MovieItem(pic: movies![index].mediumCoverImage??'', rate: movies![index].rating??0,movieId: movies![index].id??0,);
+      },
     );
   }
 }

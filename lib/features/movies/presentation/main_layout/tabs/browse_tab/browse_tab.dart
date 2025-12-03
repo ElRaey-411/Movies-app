@@ -68,6 +68,7 @@ class BrowseTab extends StatelessWidget {
                               return MovieItem(
                                 pic: movies[index].mediumCoverImage ??'',
                                 rate: movies[index].rating??0.0,
+                                movieId: movies[index].id??0,
                               );
                             },
                           ),

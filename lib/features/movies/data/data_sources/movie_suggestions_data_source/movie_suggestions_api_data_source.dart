@@ -2,32 +2,27 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/resources/const_manager.dart';
-import '../models/movie.dart';
-import 'movies_data_source.dart';
+import '../../models/movies/movie.dart';
+import 'movie_suggestions_data_source.dart';
 
-@Singleton(as: MoviesDataSource)
-class MoviesApiDataSource implements MoviesDataSource {
+@Singleton(as: MovieSuggestionsDataSource)
+class MovieSuggestionsApiDataSource implements MovieSuggestionsDataSource {
   final Dio dio = Dio(BaseOptions(baseUrl: MoviesApiConstant.baseUrl));
 
   @override
   Future<Either<String, List<Movie>>> getMovies({
-    int? limit,
-    String? genres,
-    String? queryTerm,
+required int movieId,
   }) async {
     try {
       final response = await dio.get(
-        MoviesApiConstant.moviesListEndPoint,
+        MoviesApiConstant.moviesSuggestionsEndPoint,
         queryParameters: {
-          'limit': limit,
-          'genre': genres,
-          'query_term': queryTerm,
+          'movie_id': movieId,
         },
       );
       if (response.statusCode == 200) {
         final data = response.data['data'];
         final moviesList = data['movies'];
-
         if (moviesList == null) {
           return Right([]);
         }
