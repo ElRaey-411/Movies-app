@@ -161,17 +161,13 @@ class MovieDetails extends StatelessWidget {
                         >(
                           builder: (context, state) {
                             if (state is MovieSuggestionsLoading) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
+                              return Center(child: CircularProgressIndicator());
                             }
                             if (state is MovieSuggestionsOnError) {
                               return Center(
                                 child: Text(
                                   state.message,
-                                  style: TextStyle(
-                                    color: ColorsManager.red,
-                                  ),
+                                  style: TextStyle(color: ColorsManager.red),
                                 ),
                               );
                             }
@@ -217,16 +213,12 @@ class MovieDetails extends StatelessWidget {
                             movie.cast?.length ?? 0,
                             (index) => Padding(
                               padding: EdgeInsets.only(bottom: 10.h),
-                              child: CastContainer(
-                                cast: movie.cast![index],
-                              ),
+                              child: CastContainer(cast: movie.cast![index]),
                             ),
                           ),
                         ),
                         Visibility(
-                          visible: movie.cast?.isEmpty == true
-                              ? true
-                              : false,
+                          visible: movie.cast?.isEmpty == true ? true : false,
                           child: Text(
                             "No Cast Available",
                             style: TextStyle(

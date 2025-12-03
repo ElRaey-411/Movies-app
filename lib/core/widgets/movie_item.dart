@@ -5,14 +5,15 @@ import 'package:movies_app/core/resources/routes_manager.dart';
 import 'package:safe_network_image/safe_network_image.dart';
 
 class MovieItem extends StatelessWidget {
-  const MovieItem({super.key, required this.pic, required this.rate,required this.movieId,this.isCategory});
+  const MovieItem({super.key, required this.pic, required this.rate,required this.movieId,this.width,this.height});
 
  final String pic;
  final double rate;
  final int movieId;
- final bool? isCategory;
+ final double? width;
+ final double? height;
 
- @override
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap:(){
@@ -25,8 +26,8 @@ class MovieItem extends StatelessWidget {
             child: SafeNetworkImage(
               url: pic,
               fit: BoxFit.cover,
-              width: isCategory==true?140.w: double.infinity,
-              height:isCategory==true?200.h: double.infinity,
+              width: width ?? double.infinity,
+              height:height ?? double.infinity,
             )
           ),
           Positioned(
@@ -37,7 +38,7 @@ class MovieItem extends StatelessWidget {
                   horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: ColorsManager.black.withValues(alpha:.5),
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
