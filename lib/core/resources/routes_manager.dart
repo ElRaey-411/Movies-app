@@ -6,12 +6,14 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/movies/presentation/main_layout/main_layout.dart';
 import '../../features/movies/presentation/main_layout/main_layout_provider.dart';
+import '../../features/movies/presentation/movie_details/movie_details.dart';
 
 abstract class RoutesManager {
   static const String login = "login";
   static const String register = "register";
   static const String forgetPassword = "forgetPassword";
   static const String mainLayout = "mainLayout";
+  static const String movieDetails = "movieDetails";
 
   static Map<String, WidgetBuilder> routes = {
     login: (context) => ChangeNotifierProvider(
@@ -27,5 +29,6 @@ abstract class RoutesManager {
       create: (context) => MainLayoutProvider(),
       child: MainLayout(),
     ),
+    movieDetails: (context) => MovieDetails(),
   };
 }

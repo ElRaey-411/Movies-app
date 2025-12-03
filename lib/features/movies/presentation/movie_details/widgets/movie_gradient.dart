@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../resources/assets_manager.dart';
-import '../resources/colors_manager.dart';
+import '../../../../../core/resources/colors_manager.dart';
 
 class MovieGradient extends StatelessWidget {
-  const MovieGradient({super.key, required this.pic});
+  const MovieGradient({super.key, required this.pic, required this.movieTitle, required this.movieYear});
 
   final String pic;
+  final String movieTitle;
+  final String movieYear;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 400),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeOut,
+    return SizedBox(
+      height: 680.h,
       child: Stack(
-        key: ValueKey<String>(pic),
         children: [
-          Image.network(
+          Image.asset(
             pic,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
             width: double.infinity,
-            height: double.infinity,
-            loadingBuilder: (context, child, progress) {
-              if (progress == null) return child;
-              return Container(
-                color: Colors.black,
-                child: const Center(child: CircularProgressIndicator(
-                )),
-              );
-            },
+            height: 680.h,
           ),
           Container(
             width: double.infinity,
@@ -47,14 +37,17 @@ class MovieGradient extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 35,
-            left: 60,
-            child: Image.asset(
-              ImagesAssets.availableWatchNowMovie,
-              fit: BoxFit.cover,
-              height: 550.h,
+            bottom:20.h,
+            left: 30.w,
+            right: 30.w,
+            child: Column(
+              children: [
+                Text(movieTitle, style: TextStyle(color: ColorsManager.white, fontSize: 24.sp, fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                SizedBox(height: 10.h),
+                Text(movieYear, style: TextStyle(color: ColorsManager.greyAD, fontSize: 24.sp, fontWeight: FontWeight.bold)),
+              ]
             ),
-          ),
+          )
         ],
       ),
     );

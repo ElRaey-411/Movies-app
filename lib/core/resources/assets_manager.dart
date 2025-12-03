@@ -29,4 +29,8 @@ abstract class IconAssets {
   static const String search = '$base/search_icon.svg';
   static const String explore = '$base/explore_icon.svg';
   static const String profile = '$base/profile_icon.svg';
+  static const String play = '$base/play_icon.svg';
+  static const String clock = '$base/clock_icon.svg';
+  static const String heart = '$base/heart_icon.svg';
+  static const String star = '$base/star_icon.svg';
 }

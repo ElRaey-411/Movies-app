@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/core/widgets/movie_gradient.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/widgets/animated_movie_bg.dart';
 import 'package:movies_app/core/widgets/movie_item.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/cubit_states.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/presentation/cubits/home_tab_carousel_cubit.dart';
@@ -100,7 +100,7 @@ class _HomeTabState extends State<HomeTab> {
                   height: 600.h,
                   child: Stack(
                     children: [
-                      MovieGradient(
+                      AnimatedMovieBg(
                           pic: movies[provider.selectedCarouselTab]
                               .mediumCoverImage ??
                               ''),
