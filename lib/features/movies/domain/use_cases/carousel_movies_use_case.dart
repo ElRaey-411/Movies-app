@@ -1,0 +1,16 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../core/errors/errors/failure.dart';
+import '../entities/movie_summary_entity.dart';
+import '../repos/movies_repo.dart';
+
+@lazySingleton
+class CarouselMoviesUseCase {
+  final MoviesRepo moviesRepo;
+  CarouselMoviesUseCase({required this.moviesRepo});
+
+  Future<Either<Failure, List<MovieSummaryEntity>>> call({int? limit}
+      ) async {
+    return await moviesRepo.getMovies(limit: limit);
+  }
+}
