@@ -5,6 +5,7 @@ import 'package:movies_app/core/di/service_locator.dart';
 import 'package:movies_app/core/resources/assets_manager.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
+import 'package:movies_app/features/auth/data/data_sources/local/auth_shared_prefs_local_data_source.dart';
 import 'package:movies_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/models/user.dart';
 import '../../../../../../../../core/models/avatar.dart';
@@ -153,9 +154,7 @@ class _ProfileTabState extends State<ProfileTab>
                                     RoutesManager.editProfileScreen,
                                     arguments: user,
                                   ).then((_) {
-                                    context
-                                        .read<ProfileCubit>()
-                                        .getUser();
+                                    context.read<ProfileCubit>().getUser();
                                   });
                                 },
                               ),
@@ -164,8 +163,8 @@ class _ProfileTabState extends State<ProfileTab>
                             Expanded(
                               flex: 2,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  _showLogoutDialog(context);
+                                onPressed: ()  {
+                                  
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorsManager.red,
