@@ -91,6 +91,8 @@ import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile
     as _i882;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/delete_movie_from__watch_list_use_case.dart'
     as _i401;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/delete_profile_use_case.dart'
+    as _i722;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/get_watch_list_movies_use_case.dart'
     as _i68;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/is_add_to_watch_list_use_case.dart'
@@ -146,18 +148,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i656.AuthRemoteDataSource>(
       () => _i267.AuthApiRemoteDataSource(),
     );
+    gh.lazySingleton<_i722.DeleteProfileUseCase>(
+      () => _i722.DeleteProfileUseCase(profileRepo: gh<_i173.ProfileRepo>()),
+    );
     gh.lazySingleton<_i384.ProfileUseCase>(
       () => _i384.ProfileUseCase(profileRepo: gh<_i173.ProfileRepo>()),
     );
     gh.singleton<_i173.MovieDetailsRepo>(
       () => _i904.MoviesDetailsRepoImpl(
         dataSource: gh<_i463.MovieDetailsDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i142.ProfileCubit>(
-      () => _i142.ProfileCubit(
-        profileUseCase: gh<_i384.ProfileUseCase>(),
-        profileRepo: gh<_i173.ProfileRepo>(),
       ),
     );
     gh.lazySingleton<_i7.MovieDetailsUseCase>(
@@ -177,6 +176,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i92.HomeTabCategoriseUseCase>(
       () => _i92.HomeTabCategoriseUseCase(moviesRepo: gh<_i463.MoviesRepo>()),
+    );
+    gh.lazySingleton<_i142.ProfileCubit>(
+      () => _i142.ProfileCubit(
+        profileUseCase: gh<_i384.ProfileUseCase>(),
+        profileRepo: gh<_i173.ProfileRepo>(),
+        deleteProfileUseCase: gh<_i722.DeleteProfileUseCase>(),
+      ),
     );
     gh.singleton<_i287.MovieSuggestionsRepo>(
       () => _i645.MovieSuggestionsRepoImpl(
