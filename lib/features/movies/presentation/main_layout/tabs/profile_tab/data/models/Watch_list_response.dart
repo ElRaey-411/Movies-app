@@ -8,7 +8,8 @@ const  WatchListResponse({
  factory WatchListResponse.fromJson(dynamic json) {
     return WatchListResponse(
       message: json['message'],
-      movies: json['movies'].map((movie) => WatchListMovie.fromJson(movie)).toList() ,
+      movies: (json['data'] as List<dynamic>).map((movie) => WatchListMovie.fromJson(movie)).toList()
+      ,
 
     );
 

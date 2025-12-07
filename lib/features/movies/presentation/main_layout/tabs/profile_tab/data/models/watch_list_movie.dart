@@ -27,7 +27,7 @@ class WatchListMovie {
 
 MovieSummaryEntity toMovieSummaryEntity(){
   return MovieSummaryEntity(
-    id: movieId as int,
+    id: int.parse(movieId),
     rating: rating,
     mediumCoverImage: imageURL,
   );

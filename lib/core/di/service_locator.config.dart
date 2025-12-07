@@ -67,15 +67,42 @@ import 'package:movies_app/features/movies/domain/use_cases/search_use_case.dart
     as _i584;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/browse_tab/cubit/browse_cubit.dart'
     as _i747;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_carousel_cubit.dart'
+    as _i774;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_category_cubit.dart'
+    as _i408;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/profile_api_data_source.dart'
+    as _i193;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/profile_data_source.dart'
+    as _i70;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/watch_list_api_data_source.dart'
+    as _i1040;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/watch_list_data_source.dart'
+    as _i817;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/repo_mpl/profile_repo_impl.dart'
+    as _i562;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/repo_mpl/watch_list_repo_impl.dart'
+    as _i307;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/repo/profile_repo.dart'
+    as _i173;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/repo/watch_list_repo.dart'
+    as _i299;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/get_watch_list_movies_use_case.dart'
+    as _i68;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/profile_use_case.dart'
+    as _i384;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/history_cubit.dart'
+    as _i978;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/profile_cubit.dart'
+    as _i142;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/watchlist_cubit.dart'
+    as _i636;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart'
     as _i830;
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_details_cubit.dart'
     as _i590;
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_suggestions_cubit.dart'
     as _i582;
-
-import '../../features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_carousel_cubit.dart' as _i432;
-import '../../features/movies/presentation/main_layout/tabs/home_tab/cubits/home_tab_category_cubit.dart' as _i859;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -87,15 +114,32 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i922.AuthLocalDataSource>(
       () => _i825.AuthSharedPrefsLocalDataSource(),
     );
+    gh.factory<_i978.HistoryCubit>(
+      () => _i978.HistoryCubit(gh<_i978.HistoryState>()),
+    );
     gh.singleton<_i198.MovieSuggestionsDataSource>(
       () => _i784.MovieSuggestionsApiDataSource(),
+    );
+    gh.lazySingleton<_i70.ProfileDataSource>(
+      () => _i193.ProfileApiDataSource(),
+    );
+    gh.lazySingleton<_i817.WatchListDataSource>(
+      () => _i1040.WatchListApiDataSource(),
     );
     gh.singleton<_i812.MoviesDataSource>(() => _i769.MoviesApiDataSource());
     gh.singleton<_i463.MovieDetailsDataSource>(
       () => _i206.MovieDetailsApiDataSource(),
     );
+    gh.lazySingleton<_i173.ProfileRepo>(
+      () => _i562.ProfileRepoImpl(
+        profileDataSource: gh<_i70.ProfileDataSource>(),
+      ),
+    );
     gh.singleton<_i656.AuthRemoteDataSource>(
       () => _i267.AuthApiRemoteDataSource(),
+    );
+    gh.lazySingleton<_i384.ProfileUseCase>(
+      () => _i384.ProfileUseCase(profileRepo: gh<_i173.ProfileRepo>()),
     );
     gh.singleton<_i173.MovieDetailsRepo>(
       () => _i904.MoviesDetailsRepoImpl(
@@ -125,13 +169,13 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i198.MovieSuggestionsDataSource>(),
       ),
     );
-    gh.factory<_i859.HomeTabCategoryCubit>(
-      () => _i859.HomeTabCategoryCubit(
+    gh.factory<_i408.HomeTabCategoryCubit>(
+      () => _i408.HomeTabCategoryCubit(
         homeTabCategoriseUseCase: gh<_i92.HomeTabCategoriseUseCase>(),
       ),
     );
-    gh.lazySingleton<_i432.HomeTabCarouselCubit>(
-      () => _i432.HomeTabCarouselCubit(
+    gh.lazySingleton<_i774.HomeTabCarouselCubit>(
+      () => _i774.HomeTabCarouselCubit(
         carouselMoviesUseCase: gh<_i851.CarouselMoviesUseCase>(),
       ),
     );
@@ -143,6 +187,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i830.SearchCubit>(
       () => _i830.SearchCubit(searchUseCase: gh<_i584.SearchUseCase>()),
+    );
+    gh.lazySingleton<_i142.ProfileCubit>(
+      () => _i142.ProfileCubit(profileUseCase: gh<_i384.ProfileUseCase>()),
+    );
+    gh.lazySingleton<_i299.WatchListRepo>(
+      () => _i307.WatchListRepoImpl(
+        watchListDataSource: gh<_i817.WatchListDataSource>(),
+      ),
     );
     gh.lazySingleton<_i0.MovieSuggestionsUseCase>(
       () => _i0.MovieSuggestionsUseCase(
@@ -166,6 +218,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i582.MovieSuggestionsCubit>(
       () => _i582.MovieSuggestionsCubit(
         movieSuggestionsUseCase: gh<_i0.MovieSuggestionsUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i68.GetWatchListMoviesUseCase>(
+      () => _i68.GetWatchListMoviesUseCase(
+        watchListRepo: gh<_i299.WatchListRepo>(),
+      ),
+    );
+    gh.lazySingleton<_i636.WatchListCubit>(
+      () => _i636.WatchListCubit(
+        getWatchListMoviesUseCase: gh<_i68.GetWatchListMoviesUseCase>(),
       ),
     );
     gh.singleton<_i489.AuthCubit>(

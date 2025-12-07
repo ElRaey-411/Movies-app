@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/errors/errors/failure.dart';
 import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.dart';
 import '../../../../../../../../core/errors/errors/app_exceptions.dart';
@@ -6,6 +7,7 @@ import '../../../../../../../auth/data/data_sources/local/auth_shared_prefs_loca
 import '../../domain/repo/watch_list_repo.dart';
 import '../data_source/watch_list_data_source.dart';
 
+@LazySingleton(as:WatchListRepo )
 class WatchListRepoImpl implements WatchListRepo{
   final WatchListDataSource watchListDataSource;
   WatchListRepoImpl({required this.watchListDataSource});

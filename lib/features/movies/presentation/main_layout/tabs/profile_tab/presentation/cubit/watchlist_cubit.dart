@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.dart';
 import '../../domain/use_cases/get_watch_list_movies_use_case.dart';
 
-@injectable
+@lazySingleton
 class WatchListCubit extends Cubit<WatchListState> {
   final  GetWatchListMoviesUseCase getWatchListMoviesUseCase;
 

@@ -4,22 +4,8 @@ import 'package:movies_app/features/movies/domain/entities/movie_summary_entity.
 
 @injectable
 class HistoryCubit extends Cubit<HistoryState> {
-  final  getHistoryUseCase;
+  HistoryCubit(super.initialState);
 
-  HistoryCubit({required this.getHistoryUseCase}) : super(HistoryInitial());
-
-  void getHistory() async {
-    emit(HistoryLoading());
-    final result = await getHistoryUseCase();
-    result.fold(
-      (failure) {
-        emit(HistoryError(message: failure));
-      },
-      (movies) {
-        emit(HistorySuccess(movies: movies));
-      },
-    );
-  }
 }
 
 abstract class HistoryState {}

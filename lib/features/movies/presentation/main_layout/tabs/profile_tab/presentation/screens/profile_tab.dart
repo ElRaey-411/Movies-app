@@ -29,7 +29,6 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
     super.initState();
     tabController = TabController(length: 2, vsync: this);
     context.read<WatchListCubit>().getWatchList();
-    context.read<HistoryCubit>().getHistory();
   }
 
 
@@ -287,8 +286,9 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                                 itemCount: movies.length,
                                 itemBuilder: (context, index) {
                                   return MovieItem(
-                                    pic: movies[index].mediumCoverImage ?? '',
-                                    rate: movies[index].rating ?? 0.0, movieId: movies[index].id,
+                                    pic: movies[index].mediumCoverImage,
+                                    rate: movies[index].rating,
+                                    movieId: movies[index].id,
                                   );
                                 },
                               );
@@ -298,17 +298,16 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
 
                           },
                         ),
-                        // History Tab
-                        BlocBuilder<HistoryCubit, HistoryState>(
+                        BlocBuilder<WatchListCubit, WatchListState>(
                           builder: (context, state) {
-                            if (state is HistoryLoading) {
+                            if (state is WatchListLoading) {
                               return const Center(child: CircularProgressIndicator(color: ColorsManager.yellow));
-                            } else if (state is HistoryError) {
+                            } else if (state is WatchListError) {
                               return Center(child: Text(state.message, style: TextStyle(color: Colors.white)));
-                            } else if (state is HistorySuccess) {
+                            } else if (state is WatchListSuccess) {
                               final movies = state.movies;
                               if (movies.isEmpty) {
-                                return _buildEmptyState(ImagesAssets.empity, 'No viewing history yet');
+                                return _buildEmptyState(ImagesAssets.empity, 'Your watchlist is empty');
                               }
                               return GridView.builder(
                                 padding: REdgeInsets.all(16),
@@ -321,8 +320,8 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                                 itemCount: movies.length,
                                 itemBuilder: (context, index) {
                                   return MovieItem(
-                                    pic: movies[index].mediumCoverImage ?? '',
-                                    rate: movies[index].rating ?? 0.0,
+                                    pic: movies[index].mediumCoverImage,
+                                    rate: movies[index].rating,
                                     movieId: movies[index].id,
                                   );
                                 },
@@ -330,8 +329,10 @@ class _ProfileTabState extends State<ProfileTab> with SingleTickerProviderStateM
                             }else{
                               return SizedBox();
                             }
+
                           },
                         ),
+                        // History Tab
                       ],
                     ),
                   ),
