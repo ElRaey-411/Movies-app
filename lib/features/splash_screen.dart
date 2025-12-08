@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
-import 'auth/login/login_screen.dart';
-import 'package:movies_app/core/resources/assets_manager.dart';
+
+import '../core/resources/assets_manager.dart';
+import 'auth/presentation/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -43,10 +43,12 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 5), () {
+      if (!mounted) return; // <-- مهم جداً
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+          const LoginScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },
@@ -54,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
     });
+
   }
 
   @override
@@ -76,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: ScaleTransition(
                 scale: _scaleAnimation,
                 child: Image.asset(
-                  '',
+                  ImagesAssets.logo,
                   width: 120,
                   height: 120,
                 ),
@@ -90,14 +93,14 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   children: [
                     Image.asset(
-                     '',
+                      ImagesAssets.routeLogo,
                       width: 120,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Supervised by Mohamed Nabil',
                       style: TextStyle(
-                        color: ColorsManager.white.withOpacity(0.6),
+                        color: ColorsManager.white.withValues(alpha: .6),
                         fontSize: 12,
                         fontWeight: FontWeight.w300,
                       ),

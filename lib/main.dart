@@ -5,9 +5,11 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:movies_app/core/di/service_locator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/profile_cubit.dart';
+import 'package:provider/provider.dart';
 import 'config/theme_manager.dart';
 import 'core/resources/routes_manager.dart';
 import 'features/auth/data/data_sources/local/auth_shared_prefs_local_data_source.dart';
+import 'features/auth/presentation/provider/auth_provider.dart';
 import 'features/movies/presentation/main_layout/tabs/profile_tab/data/models/movie_hive.dart';
 
 void main() async {
@@ -29,6 +31,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         BlocProvider(create: (_) => serviceLocator.get<AuthCubit>()),
         BlocProvider(create: (_) => serviceLocator.get<ProfileCubit>()),
       ],
@@ -49,7 +52,7 @@ class MoviesApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: RoutesManager.generateRoute,
-        initialRoute: token == null ? RoutesManager.login : RoutesManager.mainLayout,
+        initialRoute: RoutesManager.splashScreen,
         theme: ThemeManager.light,
         darkTheme: ThemeManager.dark,
         themeMode: ThemeMode.dark,

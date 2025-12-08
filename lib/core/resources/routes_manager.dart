@@ -6,7 +6,6 @@ import 'package:movies_app/features/movies/presentation/movie_details/cubit/is_w
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_suggestions_cubit.dart';
 import 'package:provider/provider.dart';
 import '../../features/auth/domain/use_cases/reset_password_use_case.dart';
-import '../../features/auth/presentation/provider/auth_provider.dart';
 import '../../features/auth/presentation/screens/forget_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -23,6 +22,8 @@ import '../../features/movies/presentation/main_layout/tabs/profile_tab/presenta
 import '../../features/movies/presentation/movie_details/cubit/add_history_cubit.dart';
 import '../../features/movies/presentation/movie_details/cubit/movie_details_cubit.dart';
 import '../../features/movies/presentation/movie_details/movie_details.dart';
+import '../../features/onboarding/onboarding.dart';
+import '../../features/splash_screen.dart';
 import '../di/service_locator.dart';
 
 class RoutesManager {
@@ -33,22 +34,18 @@ class RoutesManager {
   static const String movieDetails = "movieDetails";
   static const String editProfileScreen = "editProfile";
   static const String resetPasswordScreen = "=resetPassword";
+  static const String onBoardingScreen = "onBoarding";
+  static const String splashScreen = "=splash";
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case splashScreen:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+        case onBoardingScreen:
+        return MaterialPageRoute(builder: (_) => OnboardingScreen());
       case login:
-        return MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider(
-            create: (_) => AuthProvider(),
-            child: LoginScreen(),
-          ),
-        );
+    return MaterialPageRoute(builder: (_) => LoginScreen());
       case register:
-        return MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider(
-            create: (_) => AuthProvider(),
-            child: RegisterScreen(),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => RegisterScreen());
       case forgetPassword:
         return MaterialPageRoute(builder: (_) => ForgetPasswordScreen());
       case mainLayout:

@@ -13,7 +13,8 @@ class AuthProvider extends ChangeNotifier {
   int currentValue = 0;
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
   void pickAvatarImage(int avatarIndex) {
     selectedAvatar = avatarIndex;
@@ -46,7 +47,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void onCreateAccountClicked() {
-    if (formKey.currentState?.validate() == false) return;
+    if (loginFormKey.currentState?.validate() == false) return;
     notifyListeners();
   }
 

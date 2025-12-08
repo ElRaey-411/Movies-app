@@ -32,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
         builder: (context, provider, child) {
           return SingleChildScrollView(
             child: Form(
-              key: provider.formKey,
+              key: provider.registerFormKey,
               child: Padding(
                 padding: REdgeInsets.only(left: 12.0, right: 12,top: 16,bottom: 32),
                 child: Column(
@@ -148,7 +148,7 @@ class RegisterScreen extends StatelessWidget {
                       child: CustomElevatedButton(
                         text: "Create Account",
                         onPress: () {
-                          if (provider.formKey.currentState?.validate() == false) return;
+                          if (provider.registerFormKey.currentState?.validate() == false) return;
                           BlocProvider.of<AuthCubit>(context).register(
                             RegisterRequest(
                               name: provider.nameController.text,

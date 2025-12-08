@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
           builder: (context, provider, child) {
             return SingleChildScrollView(
               child: Form(
-                key: provider.formKey,
+                key: provider.loginFormKey,
                 child: Column(
                   children: [
                     Image.asset(ImagesAssets.logo),
@@ -87,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                         }
                       },
                       child: CustomElevatedButton(text: "Login", onPress: () {
-                         if(provider.formKey.currentState?.validate() == false) return ;
+                         if(provider.loginFormKey.currentState?.validate() == false) return ;
                          BlocProvider.of<AuthCubit>(context).login(LoginRequest(
                           email: provider.loginEmailController.text,
                           password: provider.loginPasswordController.text,
