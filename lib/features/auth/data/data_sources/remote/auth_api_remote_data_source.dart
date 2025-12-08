@@ -8,6 +8,8 @@ import 'package:movies_app/features/auth/data/models/login_response.dart';
 import 'package:movies_app/features/auth/data/models/register_request.dart';
 import 'package:movies_app/features/auth/data/models/register_response.dart';
 
+import '../../models/Reset_password_request.dart';
+
 @Singleton(as: AuthRemoteDataSource)
 class AuthApiRemoteDataSource implements AuthRemoteDataSource {
   Dio dio = Dio(BaseOptions(baseUrl: AuthApiConstant.baseUrl));
@@ -42,6 +44,22 @@ class AuthApiRemoteDataSource implements AuthRemoteDataSource {
         message = exception.response?.data["message"];
       }
       throw RemoteException(message: message ?? "Failed to login");
+    }
+  }
+  @override
+  Future<void> resetPassword(ResetPasswordRequest request,String token) async {
+    try {
+       await dio.patch(
+        AuthApiConstant.resetPasswordEndPoint,
+         data: request.toJson(),
+        options: Options(headers: {"Authorization": "Bearer $token"}),
+      );
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data["message"];
+      }
+      throw RemoteException(message: message ?? "Failed to Reset Password");
     }
   }
 }

@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                           UiUtils.showLoadingDialog(context);
                         }else if(state is LoginError){
                           UiUtils.hideLoadingDialog(context);
-                          UiUtils.showToastNotificationBar(context, state.message, ColorsManager.white, ColorsManager.green, Icons.error);
+                          UiUtils.showToastNotificationBar(context, state.message, ColorsManager.white, ColorsManager.red, Icons.error);
                         }else if(state is LoginSuccess){
                           UiUtils.hideLoadingDialog(context);
                           UiUtils.showToastNotificationBar(context, "Logged-in Successfully", ColorsManager.white, ColorsManager.green, Icons.check_circle);

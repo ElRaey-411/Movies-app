@@ -6,6 +6,7 @@ import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/is_watch_list_cubit.dart';
 import 'package:movies_app/features/movies/presentation/movie_details/cubit/movie_suggestions_cubit.dart';
 import 'package:provider/provider.dart';
+import '../../features/auth/domain/use_cases/reset_password_use_case.dart';
 import '../../features/auth/presentation/provider/auth_provider.dart';
 import '../../features/auth/presentation/screens/forget_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
@@ -18,6 +19,8 @@ import '../../features/movies/presentation/main_layout/tabs/profile_tab/domain/u
 import '../../features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/add_watch_list_use_case.dart';
 import '../../features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/delete_movie_from__watch_list_use_case.dart';
 import '../../features/movies/presentation/main_layout/tabs/profile_tab/domain/use_cases/is_add_to_watch_list_use_case.dart';
+import '../../features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/reset_password_cubit.dart';
+import '../../features/movies/presentation/main_layout/tabs/profile_tab/presentation/screens/reset_password_screen.dart';
 import '../../features/movies/presentation/movie_details/cubit/add_history_cubit.dart';
 import '../../features/movies/presentation/movie_details/cubit/movie_details_cubit.dart';
 import '../../features/movies/presentation/movie_details/movie_details.dart';
@@ -30,6 +33,7 @@ class RoutesManager {
   static const String mainLayout = "mainLayout";
   static const String movieDetails = "movieDetails";
   static const String editProfileScreen = "editProfile";
+  static const String resetPasswordScreen = "=resetPassword";
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case login:
@@ -102,6 +106,15 @@ class RoutesManager {
             currentAvatar: user.avaterId,
             email:user.email,
           ),
+        );
+
+        case resetPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<ResetPasswordCubit>(
+            create: (_) => ResetPasswordCubit(
+              resetPasswordUseCase: serviceLocator.get<ResetPasswordUseCase>(),
+            ),
+              child: ResetPasswordScreen()),
         );
 
       default:

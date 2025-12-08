@@ -26,6 +26,8 @@ import 'package:movies_app/features/auth/domain/use_cases/login_use_case.dart'
     as _i57;
 import 'package:movies_app/features/auth/domain/use_cases/register_use_case.dart'
     as _i1019;
+import 'package:movies_app/features/auth/domain/use_cases/reset_password_use_case.dart'
+    as _i141;
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart'
     as _i489;
 import 'package:movies_app/features/movies/data/data_sources/movie_details_data_source/movie_details_api_data_source.dart'
@@ -114,6 +116,8 @@ import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile
     as _i989;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/profile_cubit.dart'
     as _i142;
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/reset_password_cubit.dart'
+    as _i708;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/watchlist_cubit.dart'
     as _i636;
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/search_tab/cubit/search_cubit.dart'
@@ -205,6 +209,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i57.LoginUseCase(authRepository: gh<_i88.AuthRepository>()));
     gh.singleton<_i1019.RegisterUseCase>(() =>
         _i1019.RegisterUseCase(authRepository: gh<_i88.AuthRepository>()));
+    gh.singleton<_i141.ResetPasswordUseCase>(() =>
+        _i141.ResetPasswordUseCase(authRepository: gh<_i88.AuthRepository>()));
     gh.factory<_i747.BrowseCubit>(
         () => _i747.BrowseCubit(browseUseCase: gh<_i803.BrowseUseCase>()));
     gh.lazySingleton<_i617.AddHistoryUseCase>(
@@ -230,6 +236,8 @@ extension GetItInjectableX on _i174.GetIt {
           isAddToWatchListUseCase: gh<_i451.IsAddToWatchListUseCase>(),
           movieId: gh<String>(),
         ));
+    gh.lazySingleton<_i708.ResetPasswordCubit>(() => _i708.ResetPasswordCubit(
+        resetPasswordUseCase: gh<_i141.ResetPasswordUseCase>()));
     gh.lazySingleton<_i636.WatchListCubit>(() => _i636.WatchListCubit(
         getWatchListMoviesUseCase: gh<_i68.GetWatchListMoviesUseCase>()));
     gh.lazySingleton<_i119.AddHistoryCubit>(() => _i119.AddHistoryCubit(

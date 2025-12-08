@@ -160,6 +160,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     controller: _phoneController,
                     preIcon: Icon(Icons.call, color: Colors.white),
                   ),
+                  SizedBox(height: 16.h),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, RoutesManager.resetPasswordScreen);
+                    },
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Reset Password',  style: TextStyle(
+                        fontSize: 20.sp,
+                        color: ColorsManager.white,
+                        fontWeight: FontWeight.w500,
+                      ),),
+                    ),
+                  ),
 
                   SizedBox(height: 20.h),
 

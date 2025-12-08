@@ -4,10 +4,13 @@ import 'package:movies_app/core/errors/errors/app_exceptions.dart';
 import 'package:movies_app/core/errors/errors/failure.dart';
 import 'package:movies_app/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:movies_app/features/auth/data/models/Reset_password_request.dart';
 import 'package:movies_app/features/auth/data/models/login_request.dart';
 import 'package:movies_app/features/auth/data/models/register_request.dart';
 import 'package:movies_app/features/auth/domain/entities/user_entity.dart';
 import 'package:movies_app/features/auth/domain/repositories/auth_repository.dart';
+
+import '../data_sources/local/auth_shared_prefs_local_data_source.dart';
 
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -37,5 +40,17 @@ class AuthRepositoryImpl implements AuthRepository {
     } on AppExceptions catch (exception) {
       return left(Failure(message: exception.message));
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> resetPassword(ResetPasswordRequest request)async {
+   try {
+     AuthSharedPrefsLocalDataSource authLocalDataSource = AuthSharedPrefsLocalDataSource();
+     String? token = await authLocalDataSource.getToken();
+   await  authRemoteDataSource.resetPassword(request, token!);
+     return Right(null);
+   }catch (exception) {
+     return Left(Failure(message: "Failed to reset password"));
+   }
   }
 }
