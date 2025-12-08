@@ -12,7 +12,7 @@ class FirstPageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 48.h,
+      
       child: ElevatedButton(
         onPressed: () {
           pageController.nextPage(
@@ -25,14 +25,17 @@ class FirstPageButton extends StatelessWidget {
           foregroundColor: Colors.black,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child:  Text(
-          'Explore Now',
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
+        child:  Padding(
+          padding:  REdgeInsets.symmetric(vertical: 12.0),
+          child: Text(
+            'Explore Now',
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),

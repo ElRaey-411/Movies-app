@@ -39,6 +39,7 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 200.h,
+                      width: double.infinity,
                       child: CarouselSlider(
                         items: Avatar.avatars.map((avatar) {
                           return Image.asset(avatar.bath, fit: BoxFit.cover);

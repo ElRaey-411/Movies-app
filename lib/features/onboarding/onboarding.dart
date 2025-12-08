@@ -5,7 +5,6 @@ import 'package:movies_app/features/onboarding/widgets/first_page_button.dart';
 import 'package:movies_app/features/onboarding/widgets/navigation_buttons.dart';
 import '../../core/models/onboarding_models.dart';
 
-
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -16,8 +15,6 @@ class OnboardingScreen extends StatefulWidget {
 class OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-
-
 
   @override
   void dispose() {
@@ -40,7 +37,8 @@ class OnboardingScreenState extends State<OnboardingScreen> {
             itemCount: OnboardingModel.onboardings.length,
             itemBuilder: (context, index) {
               final isFirstPage = index == 0;
-              final isLastPage = index == OnboardingModel.onboardings.length - 1;
+              final isLastPage =
+                  index == OnboardingModel.onboardings.length - 1;
               final showBack = index > 1;
 
               return Stack(
@@ -73,18 +71,21 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: ColorsManager.black,
-                        borderRadius:  BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(24.r),
                           topRight: Radius.circular(24.r),
                         ),
                       ),
-                      padding:  REdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                      padding: REdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 32,
+                      ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             OnboardingModel.onboardings[index].title,
-                            style:  TextStyle(
+                            style: TextStyle(
                               fontSize: 22.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -102,37 +103,38 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                           SizedBox(height: 24.h),
+                          SizedBox(height: 24.h),
                           if (OnboardingModel.onboardings.length > 1)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(
                                 OnboardingModel.onboardings.length,
-                                    (idx) => Container(
-                                  margin:  REdgeInsets.symmetric(horizontal: 4),
+                                (idx) => Container(
+                                  margin: REdgeInsets.symmetric(horizontal: 4),
                                   width: 8.w,
                                   height: 8.h,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _currentPage == idx
-                                        ?  ColorsManager.yellow
-                                        : ColorsManager.white.withValues(alpha: .3),
+                                        ? ColorsManager.yellow
+                                        : ColorsManager.white.withValues(
+                                            alpha: .3,
+                                          ),
                                   ),
                                 ),
                               ),
                             ),
-                           SizedBox(height: 24.h),
+                          SizedBox(height: 24.h),
                           isFirstPage
-                              ? FirstPageButton(
-                            pageController: _pageController,
-                          )
+                              ? FirstPageButton(pageController: _pageController)
                               : NavigationButtons(
-                            showBack: showBack,
-                            isLastPage: isLastPage,
-                            index: index,
-                            pageController: _pageController,
-
-                          ),
+                                  showBack: _currentPage > 0,
+                                  isLastPage:
+                                      _currentPage ==
+                                      OnboardingModel.onboardings.length - 1,
+                                  index: _currentPage,
+                                  pageController: _pageController,
+                                ),
                         ],
                       ),
                     ),
@@ -145,8 +147,4 @@ class OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
-
-
-
-
 }

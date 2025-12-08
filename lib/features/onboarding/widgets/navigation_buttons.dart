@@ -24,7 +24,7 @@ class NavigationButtons extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 48.h,
+          
           child: ElevatedButton(
             onPressed: () {
               if (isLastPage) {
@@ -46,12 +46,15 @@ class NavigationButtons extends StatelessWidget {
               foregroundColor: ColorsManager.black,
               elevation: 0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(16.r),
               ),
             ),
-            child: Text(
-              OnboardingModel.onboardings[index].buttonText,
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+            child: Padding(
+              padding:  REdgeInsets.symmetric(vertical: 12.0),
+              child: Text(
+                OnboardingModel.onboardings[index].buttonText,
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ),
             ),
           ),
         ),
@@ -59,7 +62,7 @@ class NavigationButtons extends StatelessWidget {
           SizedBox(height: 12.h),
           SizedBox(
             width: double.infinity,
-            height: 48.h,
+            
             child: OutlinedButton(
               onPressed: () {
                 pageController.previousPage(
@@ -72,12 +75,15 @@ class NavigationButtons extends StatelessWidget {
                 side: BorderSide(color: Colors.yellow, width: 3.w),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
               ),
-              child: Text(
-                'Back',
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              child: Padding(
+                padding:  REdgeInsets.symmetric(vertical: 20.0),
+                child: Text(
+                  'Back',
+                  style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
           ),

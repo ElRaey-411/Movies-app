@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
+import 'package:movies_app/features/onboarding/onboarding.dart';
 
 import '../core/resources/assets_manager.dart';
 import 'auth/presentation/screens/login_screen.dart';
@@ -43,12 +44,12 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 5), () {
-      if (!mounted) return; // <-- مهم جداً
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-          const LoginScreen(),
+          const OnboardingScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },
