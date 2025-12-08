@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:movies_app/core/di/service_locator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/main_layout_provider.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/get_history_cubit.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/profile_cubit.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/watchlist_cubit.dart';
@@ -49,7 +50,9 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<IsWatchListCubit>()),
         BlocProvider(create: (_) => serviceLocator<AddHistoryCubit>()),
       ],
-      child: MoviesApp(token: token),
+      child: ChangeNotifierProvider(
+        create: (context)=> MainLayoutProvider(),
+        child: MoviesApp(token: token)),
     ),
   );
 }

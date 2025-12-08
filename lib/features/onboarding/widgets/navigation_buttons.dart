@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/features/onboarding/onboarding_shared_prefs/onboarding_shared_prefs.dart';
 import '../../../core/models/onboarding_models.dart';
 import '../../../core/resources/colors_manager.dart';
 import '../../auth/presentation/screens/login_screen.dart';
@@ -24,15 +27,14 @@ class NavigationButtons extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          
+
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (isLastPage) {
+                await OnboardingSharedPrefs.saveOnboardingState();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               } else {
                 pageController.nextPage(
@@ -50,7 +52,7 @@ class NavigationButtons extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding:  REdgeInsets.symmetric(vertical: 12.0),
+              padding: REdgeInsets.symmetric(vertical: 12.0),
               child: Text(
                 OnboardingModel.onboardings[index].buttonText,
                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
@@ -62,7 +64,7 @@ class NavigationButtons extends StatelessWidget {
           SizedBox(height: 12.h),
           SizedBox(
             width: double.infinity,
-            
+
             child: OutlinedButton(
               onPressed: () {
                 pageController.previousPage(
@@ -79,10 +81,13 @@ class NavigationButtons extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding:  REdgeInsets.symmetric(vertical: 20.0),
+                padding: REdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   'Back',
-                  style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),

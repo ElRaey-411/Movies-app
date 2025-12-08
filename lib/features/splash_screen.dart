@@ -1,6 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/resources/colors_manager.dart';
+import 'package:movies_app/features/auth/data/data_sources/local/auth_shared_prefs_local_data_source.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/main_layout.dart';
 import 'package:movies_app/features/onboarding/onboarding.dart';
+import 'package:movies_app/features/onboarding/onboarding_shared_prefs/onboarding_shared_prefs.dart';
 
 import '../core/resources/assets_manager.dart';
 import 'auth/presentation/screens/login_screen.dart';
@@ -43,21 +48,31 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () async {
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-          const OnboardingScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 500),
-        ),
-      );
-    });
 
+      final token = await AuthSharedPrefsLocalDataSource()
+          .getToken()
+          .catchError((_) => '');
+      final isFirstTime = await OnboardingSharedPrefs.getOnboardingState();
+
+      if (token.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const MainLayout()),
+        );
+      } else if (isFirstTime) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      }
+    });
   }
 
   @override
@@ -79,11 +94,7 @@ class _SplashScreenState extends State<SplashScreen>
               opacity: _fadeAnimation,
               child: ScaleTransition(
                 scale: _scaleAnimation,
-                child: Image.asset(
-                  ImagesAssets.logo,
-                  width: 120,
-                  height: 120,
-                ),
+                child: Image.asset(ImagesAssets.logo, width: 120, height: 120),
               ),
             ),
             const Spacer(),
@@ -93,10 +104,7 @@ class _SplashScreenState extends State<SplashScreen>
                 padding: const EdgeInsets.only(bottom: 60),
                 child: Column(
                   children: [
-                    Image.asset(
-                      ImagesAssets.routeLogo,
-                      width: 120,
-                    ),
+                    Image.asset(ImagesAssets.routeLogo, width: 120),
                     const SizedBox(height: 8),
                     Text(
                       'Supervised by Mohamed Nabil',

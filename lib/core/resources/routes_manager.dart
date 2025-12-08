@@ -50,10 +50,7 @@ class RoutesManager {
         return MaterialPageRoute(builder: (_) => ForgetPasswordScreen());
       case mainLayout:
         return MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider(
-            create: (_) => MainLayoutProvider(),
-            child: MainLayout(),
-          ),
+          builder: (context) => MainLayout(),
         );
       case movieDetails:
         final movieId = settings.arguments as int;
