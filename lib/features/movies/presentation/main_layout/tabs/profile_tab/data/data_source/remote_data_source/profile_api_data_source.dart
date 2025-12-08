@@ -1,10 +1,13 @@
+
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/remote/profile_data_source.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/models/Profile_response.dart';
-import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/models/edit_profile_response.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/data/data_source/remote_data_source/profile_data_source.dart';
+
 import '../../../../../../../../../core/errors/errors/app_exceptions.dart';
 import '../../../../../../../../../core/resources/const_manager.dart';
+import '../../models/Profile_response.dart';
+import '../../models/edit_profile_response.dart';
 
 @LazySingleton(as: ProfileDataSource)
 class ProfileApiDataSource implements ProfileDataSource {

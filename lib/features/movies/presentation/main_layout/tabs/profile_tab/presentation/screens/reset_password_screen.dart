@@ -8,6 +8,7 @@ import 'package:movies_app/core/widgets/custom_app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 
+import '../../../../../../../../core/validators/app_validators.dart';
 import '../../../../../../../auth/data/models/Reset_password_request.dart';
 import '../cubit/reset_password_cubit.dart';
 
@@ -56,6 +57,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   controller: oldPasswordController,
                   isObscure: oldPassword,
                   hintText: "old Password",
+                  validator: AppValidators.passwordValidator,
                   preIcon: ImageIcon(AssetImage(IconAssets.password)),
                   keyboardType: TextInputType.visiblePassword,
                 ),
@@ -64,6 +66,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   controller: newPasswordController,
                   isObscure: newPassword,
                   hintText: "new Password",
+                  validator: AppValidators.passwordValidator,
                   preIcon: ImageIcon(AssetImage(IconAssets.password)),
                   keyboardType: TextInputType.visiblePassword,
                 ),
@@ -101,6 +104,16 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     text: "Change Password",
                     onPress: () {
                       if (formKey.currentState?.validate() == false) return;
+                      if (oldPasswordController.text == newPasswordController.text){
+                        UiUtils.showToastNotificationBar(
+                          context,
+                          "New password must be different from old password",
+                          ColorsManager.white,
+                          ColorsManager.red,
+                          Icons.error,
+                        );
+                        return;
+                      }
                       context.read<ResetPasswordCubit>().resetPassword(
                         ResetPasswordRequest(
                           oldPassword: oldPasswordController.text,

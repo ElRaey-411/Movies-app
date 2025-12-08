@@ -6,14 +6,13 @@ import 'package:movies_app/core/resources/colors_manager.dart';
 import 'package:movies_app/core/resources/routes_manager.dart';
 import 'package:movies_app/features/auth/data/data_sources/local/auth_shared_prefs_local_data_source.dart';
 import '../../../../../../../../core/models/avatar.dart';
+import '../../../../../../../../core/widgets/custom_grid_view.dart';
 import '../cubit/get_history_cubit.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/watchlist_cubit.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
-import 'package:movies_app/core/widgets/movie_item.dart';
-
 import '../widgets/build_empty_state.dart';
-import '../widgets/logout_dialog.dart';
+import '../widgets/custom_alert_dialog.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -25,15 +24,14 @@ class ProfileTab extends StatefulWidget {
 class _ProfileTabState extends State<ProfileTab>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  late AuthSharedPrefsLocalDataSource authSharedPrefsLocalDataSource;
 
   @override
   void initState() {
     super.initState();
-    authSharedPrefsLocalDataSource = AuthSharedPrefsLocalDataSource();
     tabController = TabController(length: 2, vsync: this);
     context.read<WatchListCubit>().getWatchList();
     context.read<GetHistoryCubit>().getHistory();
+    context.read<ProfileCubit>().getUser();
   }
 
   @override
@@ -84,13 +82,34 @@ class _ProfileTabState extends State<ProfileTab>
                                 children: [
                                   Column(
                                     children: [
-                                      Text(
-                                        "12",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      BlocBuilder<WatchListCubit, WatchListState>(
+                                        builder: (context, state) {
+                                          if (state is WatchListLoading){
+                                            return SizedBox(
+                                              height:34.h,
+                                              width: 34.w,
+                                              child: CircularProgressIndicator()
+                                            );
+                                          }
+                                         else if (state is WatchListError) {
+                                            return Icon(
+                                              Icons.error,
+                                              color: Colors.red,
+                                              size: 32);
+                                          }else if (state is WatchListSuccess) {
+                                            final int moviesCounter = state.movies.length;
+                                            return Text(
+                                              "$moviesCounter",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 24.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          }else{
+                                            return SizedBox();
+                                          }
+                                        }
                                       ),
                                       SizedBox(height: 4.h),
                                       Text(
@@ -104,13 +123,34 @@ class _ProfileTabState extends State<ProfileTab>
                                   ),
                                   Column(
                                     children: [
-                                      Text(
-                                        "10",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      BlocBuilder<GetHistoryCubit, GetHistoryState>(
+                                          builder: (context, state) {
+                                            if (state is GetHistoryLoading){
+                                              return SizedBox(
+                                                  height:34.h,
+                                                  width: 34.w,
+                                                  child: CircularProgressIndicator()
+                                              );
+                                            }
+                                            else if (state is GetHistoryError) {
+                                              return Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                  size: 32);
+                                            }else if (state is GetHistorySuccess) {
+                                              final int moviesCounter = state.movies.length;
+                                              return Text(
+                                                "$moviesCounter",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 24.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              );
+                                            }else{
+                                              return SizedBox();
+                                            }
+                                          }
                                       ),
                                       SizedBox(height: 4.h),
                                       Text(
@@ -163,7 +203,8 @@ class _ProfileTabState extends State<ProfileTab>
                               flex: 2,
                               child: ElevatedButton(
                                 onPressed: ()  {
-                                  LogoutDialog.show(context, authSharedPrefsLocalDataSource);
+                                  CustomAlertDialog.show(context,onLogout,'Are you sure you want to logout?');
+
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorsManager.red,
@@ -224,7 +265,6 @@ class _ProfileTabState extends State<ProfileTab>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-
                 children: [
                   BlocBuilder<WatchListCubit, WatchListState>(
                     builder: (context, state) {
@@ -249,19 +289,9 @@ class _ProfileTabState extends State<ProfileTab>
                             message: 'Your watchlist is empty',
                           );
                         }
-                        return GridView.builder(
-                          padding: REdgeInsets.all(16),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10.w,
-                                mainAxisSpacing: 10.h,
-                                childAspectRatio: 0.7,
-                              ),
-                          itemCount: movies.length,
-                          itemBuilder: (context, index) {
-                            return MovieItem(movie: movies[index]);
-                          },
+                        return CustomGridView(
+                          movies: movies,
+                          crossAxisCount: 3,
                         );
                       } else {
                         return SizedBox();
@@ -291,19 +321,9 @@ class _ProfileTabState extends State<ProfileTab>
                             message: 'Your History is empty',
                           );
                         }
-                        return GridView.builder(
-                          padding: REdgeInsets.all(16),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10.w,
-                                mainAxisSpacing: 10.h,
-                                childAspectRatio: 0.7,
-                              ),
-                          itemCount: movies.length,
-                          itemBuilder: (context, index) {
-                            return MovieItem(movie: movies[index]);
-                          },
+                        return CustomGridView(
+                          movies: movies,
+                          crossAxisCount: 3,
                         );
                       } else {
                         return SizedBox();
@@ -318,6 +338,14 @@ class _ProfileTabState extends State<ProfileTab>
       ),
     );
   }
-
+ void onLogout() async {
+    AuthSharedPrefsLocalDataSource authDataSource = AuthSharedPrefsLocalDataSource();
+   await authDataSource.deleteToken();
+   Navigator.pushNamedAndRemoveUntil(
+     context,
+     RoutesManager.login,
+         (route) => false,
+   );
+ }
 
 }
