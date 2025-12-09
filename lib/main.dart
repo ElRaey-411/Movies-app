@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:movies_app/core/di/service_locator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:movies_app/features/movies/presentation/main_layout/main_layout_provider.dart';
 import 'package:movies_app/features/movies/presentation/main_layout/tabs/profile_tab/presentation/cubit/profile_cubit.dart';
 import 'package:provider/provider.dart';
 import 'config/theme_manager.dart';
@@ -29,7 +30,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         BlocProvider(create: (_) => serviceLocator.get<AuthCubit>()),
         BlocProvider(create: (_) => serviceLocator.get<ProfileCubit>()),
-        ChangeNotifierProvider(create: (_) => LangProvider())
+        ChangeNotifierProvider(create: (_) => LangProvider()),
+        ChangeNotifierProvider(create: (_)=> MainLayoutProvider()),
       ],
           child: MoviesApp(),
     ),
