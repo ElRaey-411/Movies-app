@@ -58,6 +58,8 @@ class AuthProvider extends ChangeNotifier {
     passwordController.dispose();
     confirmPasswordController.dispose();
     phoneController.dispose();
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
     super.dispose();
   }
 }
