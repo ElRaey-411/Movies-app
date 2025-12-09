@@ -23,17 +23,20 @@ void main() async {
   Hive.registerAdapter(MovieHiveAdapter());
   await Hive.openBox<MovieHive>('historyBox');
 
-
   runApp(
     MultiBlocProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         BlocProvider(create: (_) => serviceLocator.get<AuthCubit>()),
         BlocProvider(create: (_) => serviceLocator.get<ProfileCubit>()),
-        ChangeNotifierProvider(create: (_) => LangProvider()),
-        ChangeNotifierProvider(create: (_)=> MainLayoutProvider()),
       ],
-          child: MoviesApp(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LangProvider()),
+          ChangeNotifierProvider(create: (_) => MainLayoutProvider()),
+        ],
+        child: MoviesApp(),
+      ),
     ),
   );
 }
